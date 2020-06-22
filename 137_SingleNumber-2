@@ -1,0 +1,41 @@
+// C++:
+
+int singleNumber(vector<int>& nums) {
+        int ones = 0, twos = 0, thrice = 0;
+        for(int n : nums){
+            twos = twos | (ones & n);
+            ones = ones ^ n;
+            thrice = ones & twos;
+            ones &= ~thrice;
+            twos &= ~thrice;
+        }
+        return ones;
+    }
+// Java:
+
+public int singleNumber(int[] nums) {
+        int ones = 0, twos = 0, thrice = 0;
+        for(int n : nums){
+            twos = twos | (ones & n);
+            ones = ones ^ n;
+            thrice = ones & twos;
+            ones &= ~thrice;
+            twos &= ~thrice;
+        }
+        return ones;
+    }
+
+## Python3:
+
+def singleNumber(self, nums: List[int]) -> int:
+        ones, twos, thrice = 0, 0, 0
+        for n in nums:
+            twos = twos | (ones & n)
+            ones = ones ^ n
+            thrice = ones & twos
+            ones &= ~thrice
+            twos &= ~thrice
+        
+        return ones
+        
+Detailed Video Explanation is available here: https://youtu.be/ZbTXZ2_YAgI
