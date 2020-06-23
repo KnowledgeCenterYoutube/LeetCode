@@ -1,0 +1,57 @@
+// LeetCode 222: Count Complete Tree Nodes
+// Detailed Explanation available here: https://youtu.be/i_r2uKbwHCU
+
+// C++:
+int countNodes(TreeNode* root) {
+    if(!root) return 0;
+    TreeNode *left = root, *right = root;
+    int h_l = 0, h_r = 0;
+    while(left){
+        h_l++;
+        left = left->left;
+    }
+    while(right){
+        h_r++;
+        right = right->right;
+    }
+    if(h_l == h_r) return (1<<h_l) - 1;
+        
+    return 1 + countNodes(root->left) + countNodes(root->right);
+}
+
+// Java:
+public int countNodes(TreeNode root) {
+        if(root == null) return 0;
+        TreeNode left = root, right = root;
+        int h_l = 0, h_r = 0;
+        while(left != null){
+            h_l++;
+            left = left.left;
+        }
+        while(right != null){
+            h_r++;
+            right = right.right;
+        }
+        if(h_l == h_r) return (1<<h_l) - 1;
+        
+        return 1 + countNodes(root.left) + countNodes(root.right);
+}
+
+# Python3:
+def countNodes(self, root: TreeNode) -> int:
+    if root == None: return 0
+    left, right = root, root
+    h_l, h_r = 0, 0
+    while left != None:
+        h_l += 1
+        left = left.left
+        
+    while right != None:
+        h_r += 1
+        right = right.right
+        
+    if h_l == h_r: return (1<<h_l) - 1
+        
+    return 1 + self.countNodes(root.left) + self.countNodes(root.right)
+
+** Please share and Subscribe the Channel **
