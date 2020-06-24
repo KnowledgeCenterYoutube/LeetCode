@@ -1,0 +1,44 @@
+// LeetCode 96: Unique Binary Search Trees
+// Detailed Explanation is available here:
+
+// C++:
+
+int numTrees(int n) {
+        if(n < 2) return 1;
+        vector<int> sol(n+1, 0);
+        sol[0] = 1, sol[1] = 1;
+        for(int i = 2; i <= n; ++i){
+            for(int j = 0; j < i; ++j){
+                sol[i] += sol[j]*sol[i-1-j];
+            }
+        }
+        return sol[n];
+    }
+    
+// Java:
+
+public int numTrees(int n) {
+        if(n < 2) return 1;
+        int[] sol = new int[n+1];
+        sol[0] = 1; sol[1] = 1;
+        for(int i = 2; i <= n; ++i){
+            for(int j = 0; j < i; ++j){
+                sol[i] += sol[j]*sol[i-1-j];
+            }
+        }
+        return sol[n];
+    }
+    
+    
+# Python3:
+
+def numTrees(self, n: int) -> int:
+        if(n < 2): return 1
+        sol = [0]*(n+1)
+        sol[0], sol[1] = 1, 1
+        for i in range(2, n+1):
+            for j in range(0, i):
+                sol[i] += sol[j]*sol[i-1-j]
+        return sol[n]
+        
+***** Please Like, Share and Subscribe Knowledge Center : https://www.youtube.com/c/KnowledgeCenter *****
