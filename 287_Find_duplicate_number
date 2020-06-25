@@ -1,0 +1,66 @@
+// Leetcode 287: Find the Duplicate Number
+// Detailed Explanation is available here: https://youtu.be/GOYMcrvg-Ck
+
+// C++
+
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        int n = nums.size();
+        int idx = 0;
+        int curr_max = 0;
+        for(int i = 0; i < n; ++i){
+            int id = nums[i] % n;
+            nums[id] += n;
+        }
+        for(int i = 0; i < n; ++i){
+            if(nums[i] > curr_max){
+                curr_max = nums[i];
+                idx = i;
+            }
+            nums[i] %= n;
+        }
+        return idx;
+    }
+};
+
+// Java:
+class Solution {
+    public int findDuplicate(int[] nums) {
+        int n = nums.length;
+        int idx = 0;
+        int curr_max = 0;
+        for(int i = 0; i < n; ++i){
+            int id = nums[i] % n;
+            nums[id] += n;
+        }
+        for(int i = 0; i < n; ++i){
+            if(nums[i] > curr_max){
+                curr_max = nums[i];
+                idx = i;
+            }
+            nums[i] %= n;
+        }
+        return idx;
+    }
+}
+
+# Python3:
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        n = len(nums)
+        idx = 0
+        curr_max = 0
+        for i in range(n):
+            id = nums[i] % n
+            nums[id] += n
+        
+        for i in range(n):
+            if nums[i] > curr_max:
+                curr_max = nums[i]
+                idx = i
+            nums[i] %= n
+        
+        return idx
+        
+***** Please LIKE, SHARE and SUBSCRIBE Knowledge Center channel: https://www.youtube.com/c/KnowledgeCenter ******
