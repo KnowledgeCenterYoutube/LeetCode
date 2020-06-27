@@ -1,0 +1,62 @@
+Leetcode 279: Perfect Squares
+--------------------------------------
+Detailed Explanation can be found here: https://youtu.be/dOOzOsfj31I
+
+C++:
+----
+class Solution {
+public:
+    int numSquares(int n) {
+        vector<int> dp(n+1, 0);
+        for(int x = 1; x <= n; ++x){
+            int min_val = x;
+            int y = 1, sq = 1;
+            while(sq <= x){
+                min_val = min(min_val, 1 + dp[x-sq]);
+                y++;
+                sq = y*y;
+            }
+            dp[x] = min_val;
+        }
+        return dp[n];
+    }
+};
+
+Java:
+-----
+class Solution {
+    public int numSquares(int n) {
+        int[] dp = new int[n+1];
+        for(int x = 1; x <= n; ++x){
+            int min_val = x;
+            int y = 1, sq = 1;
+            while(sq <= x){
+                min_val = Math.min(min_val, 1 + dp[x-sq]);
+                y++;
+                sq = y*y;
+            }
+            dp[x] = min_val;
+        }
+        return dp[n];
+    }
+}
+
+Python3:
+--------
+class Solution:
+    def numSquares(self, n: int) -> int:
+        dp = [0]*(n+1)
+        for x in range(1, n+1):
+            min_val = x;
+            y, sq = 1, 1
+            while sq <= x:
+                min_val = min(min_val, 1 + dp[x-sq])
+                y += 1
+                sq = y*y
+            
+            dp[x] = min_val
+        
+        return dp[n]
+  
+  
+****** Please Subscribe Knowledge Center: http://youtube.com/c/KnowledgeCenter ********
