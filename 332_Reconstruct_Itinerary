@@ -1,0 +1,76 @@
+LeetCode 332: Reconstruct Itinerary
+Detailed Explanation can be found here: https://youtu.be/j31ZOupyrAs
+
+C++
+
+class Solution {
+    void dfs(unordered_map<string, multiset<string>>& adj, vector<string>& result, string s){
+        while(adj[s].size()){
+            string v = *(adj[s].begin());
+            adj[s].erase(adj[s].begin());
+            dfs(adj, result, v);
+        }
+        result.push_back(s);
+    }
+public:
+    vector<string> findItinerary(vector<vector<string>>& tickets) {
+        unordered_map<string, multiset<string>> adj;
+        for(vector<string>& t: tickets)
+            adj[t[0]].insert(t[1]);
+        
+        vector<string> result;
+        dfs(adj, result, "JFK");
+        reverse(result.begin(), result.end());
+        return result;
+    }
+};
+
+
+Java
+
+class Solution {
+    private void dfs(Map<String, PriorityQueue<String>> adj, LinkedList<String> result, String s){
+        PriorityQueue<String> pq = adj.get(s);
+        while(pq != null && !pq.isEmpty()){
+            String v = pq.poll();
+            dfs(adj, result, v);
+        }
+        result.addFirst(s);
+    }
+    public List<String> findItinerary(List<List<String>> tickets) {
+        Map<String, PriorityQueue<String>> adj = new HashMap();
+        for(List<String> t: tickets){
+            adj.putIfAbsent(t.get(0), new PriorityQueue<>());
+            adj.get(t.get(0)).add(t.get(1));
+        }
+        
+        LinkedList<String> result = new LinkedList();
+        dfs(adj, result, "JFK");
+        return result;
+    }
+}
+
+Python3
+class Solution:
+    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        self.adj = {}
+        tickets.sort(key=lambda x: x[1])
+
+        for u, v in tickets:
+            if u in self.adj:
+                self.adj[u].append(v)
+            else:
+                self.adj[u] = [v]
+        
+        self.result = []
+        self.dfs("JFK")
+        
+        return self.result[::-1]
+    
+    def dfs(self, s):
+        while s in self.adj and len(self.adj[s]) > 0:
+            v = self.adj[s][0]
+            (self.adj[s]).pop(0)
+            self.dfs(v)
+        
+        self.result.append(s)
