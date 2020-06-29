@@ -1,0 +1,51 @@
+Leetcode 62: Unique Paths
+Detailed Explanation can be found here: https://youtu.be/-fS1pS1mxQc
+
+C++
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        vector<vector<int>> paths(n, vector<int>(m));
+        for(int c = 0; c < m; ++c)
+            paths[n-1][c] = 1;
+        for(int r = 0; r < n; ++r)
+            paths[r][m-1] = 1;
+        for(int r = n-2; r >= 0; --r){
+            for(int c = m-2; c >= 0; --c){
+                paths[r][c] = paths[r][c+1] + paths[r+1][c];
+            }
+        }
+        return paths[0][0];
+    }
+};
+Java
+class Solution {
+    public int uniquePaths(int m, int n) {
+        int[][] paths = new int[n][m];
+        for(int c = 0; c < m; ++c)
+            paths[n-1][c] = 1;
+        for(int r = 0; r < n; ++r)
+            paths[r][m-1] = 1;
+        for(int r = n-2; r >= 0; --r){
+            for(int c = m-2; c >= 0; --c){
+                paths[r][c] = paths[r][c+1] + paths[r+1][c];
+            }
+        }
+        return paths[0][0];
+    }
+}
+Python3
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        paths = [[0]*m for i in range(n)]
+        for c in range(m):
+            paths[n-1][c] = 1
+        for r in range(n):
+            paths[r][m-1] = 1
+        for r in range(n-2, -1, -1):
+            for c in range(m-2, -1, -1):
+                paths[r][c] = paths[r][c+1] + paths[r+1][c]
+            
+        return paths[0][0]
+        
+    
