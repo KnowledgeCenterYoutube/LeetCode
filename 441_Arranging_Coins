@@ -1,0 +1,29 @@
+LeetCode 441 : Arranging Coins
+Detailed video explanation can be found here: https://youtu.be/dIL-weWh8To
+
+C++
+---
+int arrangeCoins(int n) {
+    long long k = sqrt(2*(long long)n);
+    long long sum = k*(k+1)/2;
+    if(sum > n) return k - 1;
+    return k;
+}
+    
+Java:
+----
+public int arrangeCoins(int n) {
+    long k = (long)Math.sqrt(2*(long)n);
+    long sum = k*(k+1)/2;
+    if(sum > n) return (int)k - 1;
+    return (int)k;
+}
+    
+Python3:
+--------
+def arrangeCoins(self, n: int) -> int:
+    k = (int)(sqrt(2*n))
+    sum = (int)(k*(k+1)/2)
+    if sum > n: return k - 1
+    return k
+    
