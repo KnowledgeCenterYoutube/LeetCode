@@ -1,0 +1,61 @@
+LeetCode 306: Additive Number
+Detailed Explanation video is available here: 
+
+C++
+---
+class Solution {
+    bool find_rec(long long n1, long long n2, string s, bool found){
+        if (s.length() == 0 && found)
+            return true;
+        string n3 = to_string(n1 + n2);
+        int idx = min(n3.length(), s.length());
+        if(s.substr(0, idx) == n3)
+            return find_rec(n2, stol(n3), s.substr(idx), true);
+        return false;
+    }
+public:
+    
+    bool isAdditiveNumber(string num) {
+        for (int i = 1; i < num.length() - 1; ++ i){
+            long long n1 = stol(num.substr(0, i));
+            if(to_string(n1) != num.substr(0, i))
+                break;
+            for(int j = i+1; j < num.length(); ++j){
+                long long n2 = stol(num.substr(i, j-i));
+                if(to_string(n2) != num.substr(i, j-i))
+                    break;
+                bool found = find_rec(n1, n2, num.substr(j), false);
+                if(found)
+                    return true;
+            }
+        }
+        return false;
+    }
+};
+
+
+Python3:
+-------
+class Solution:
+    def find_rec(self, n1, n2, s, found):
+            if s == "" and found:
+                return True
+            n3 = str(n1 + n2)
+            idx = min(len(n3),len(s))
+            if s[:idx] == n3:
+                return self.find_rec(n2, int(n3), s[idx:], True)
+            return False
+        
+    def isAdditiveNumber(self, num: str) -> bool:
+        for i in range(1, len(num)-1):
+            n1 = int(num[:i])
+            if str(n1) != num[:i]:
+                break
+            for j in range(i+1, len(num)):
+                n2 = int(num[i:j])
+                if str(n2) != num[i:j]:
+                    break
+                found = self.find_rec(n1, n2, num[j:], False)
+                if found:
+                    return True
+        return False
