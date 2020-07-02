@@ -1,0 +1,67 @@
+Letcode 107: Binary Tree Level Order traversal II
+Detailed video explanation can be found here: https://youtu.be/FSWqYp3k1O4
+
+C++
+---
+vector<vector<int>> levelOrderBottom(TreeNode* root) {
+        vector<vector<int>> result;
+        if(!root) return result;
+        queue<TreeNode*> Q;
+        Q.push(root);
+        while(!Q.empty()){
+            int n = Q.size();
+            vector<int> nodes(n);
+            for(int i = 0; i < n; ++i){
+                TreeNode* node = Q.front();
+                nodes[i] = node->val;
+                Q.pop();
+                if(node->left) Q.push(node->left);
+                if(node->right) Q.push(node->right);
+            }
+            result.push_back(nodes);
+        }
+        reverse(result.begin(), result.end());
+        return result;
+    }
+    
+    
+Java:
+----
+public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        ArrayList<List<Integer>> result = new ArrayList<List<Integer>>();
+        if(root == null) return result;
+        Queue<TreeNode> Q = new LinkedList<>();
+        Q.add(root);
+        while(!Q.isEmpty()){
+            int n = Q.size();
+            List<Integer> nodes = new ArrayList();
+            for(int i = 0; i < n; ++i){
+                TreeNode node = Q.poll();
+                nodes.add(node.val);
+                if(node.left != null) Q.add(node.left);
+                if(node.right != null) Q.add(node.right);
+            }
+            result.add(0, nodes);
+        }
+        return result;
+    }
+    
+    
+Python3:
+--------
+def levelOrderBottom(self, root: TreeNode) -> List[List[int]]:
+        result = []
+        if root == None: return result
+        Q = []
+        Q.append(root)
+        while len(Q) > 0:
+            n = len(Q)
+            nodes = []
+            for i in range(n):
+                node = Q.pop(0)
+                nodes.append(node.val)
+                if node.left != None: Q.append(node.left)
+                if node.right != None: Q.append(node.right)
+            result.insert(0, nodes)
+        
+        return result
