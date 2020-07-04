@@ -1,0 +1,65 @@
+LeetCode 264: Ugly Number II
+Detailed video Explanation is here: https://youtu.be/kSDI_iOiGQY
+
+C++:
+----
+int nthUglyNumber(int n) {
+        int ugly[n];
+        ugly[0] = 1;
+        int count = 1;
+        int idx2 = 0, idx3 = 0, idx5 = 0;
+        while(count < n){
+            int val2 = ugly[idx2]*2;
+            int val3 = ugly[idx3]*3;
+            int val5 = ugly[idx5]*5;
+            int val = min({val2, val3, val5});
+            if(val == val2) idx2++;
+            if(val == val3) idx3++;
+            if(val == val5) idx5++;
+            ugly[count++] = val;
+        }
+        return ugly[n-1];
+    }
+
+
+Java:
+-----
+public int nthUglyNumber(int n) {
+        int ugly[] = new int[n];
+        ugly[0] = 1;
+        int count = 1;
+        int idx2 = 0, idx3 = 0, idx5 = 0;
+        while(count < n){
+            int val2 = ugly[idx2]*2;
+            int val3 = ugly[idx3]*3;
+            int val5 = ugly[idx5]*5;
+            int val = Math.min(val2, Math.min(val3, val5));
+            if(val == val2) idx2++;
+            if(val == val3) idx3++;
+            if(val == val5) idx5++;
+            ugly[count++] = val;
+        }
+        return ugly[n-1];
+    }
+    
+    
+Python3:
+-------
+def nthUglyNumber(self, n: int) -> int:
+    ugly = [1]*n
+    count = 1
+    idx2, idx3, idx5 = 0, 0, 0
+    while count < n:
+        val2 = ugly[idx2]*2
+        val3 = ugly[idx3]*3
+        val5 = ugly[idx5]*5
+        val = min(val2, val3, val5)
+        if val == val2: idx2 += 1
+        if val == val3: idx3 += 1
+        if val == val5: idx5 += 1
+        ugly[count] = val
+        count += 1
+        
+    return ugly[n-1]
+    
+   
