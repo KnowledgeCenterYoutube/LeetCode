@@ -1,0 +1,43 @@
+Leetcode 461: Hamming Distance
+Detailed video explanation: https://youtu.be/5UKMvO5bXPI
+
+C++:
+----
+int hammingDistance(int x, int y) {
+        return bitset<32>(x^y).count();
+    }
+int hammingDistance(int x, int y) {
+        int result = x^y;
+        int count = 0;
+        while(result > 0){
+            count += 1 & result;
+            result >>= 1;
+        }
+        return count;
+    }
+    
+    
+Java:
+-----
+public int hammingDistance(int x, int y) {
+        int result = x^y;
+        int count = 0;
+        while(result>0){
+            count += result & 1;
+            result >>= 1;
+        }
+        return count;
+    }
+  
+  
+Python3:
+-------
+def hammingDistance(self, x: int, y: int) -> int:
+    result, count = x^y, 0
+    while result>0:
+        count += result & 1
+        result >>= 1
+        
+    return count
+        
+        
