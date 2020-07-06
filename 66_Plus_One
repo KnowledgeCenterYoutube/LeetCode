@@ -1,0 +1,53 @@
+LeetCode 66: Plus One
+Detailed video explanation is available here on KnowledgeCenter Channel: https://youtu.be/yzlQj0LR7m8
+
+C++:
+----
+vector<int> plusOne(vector<int>& digits) {
+        int idx = digits.size()-1;
+        while(idx >= 0){
+            if(digits[idx] == 9)
+                digits[idx] = 0;
+            else{
+                digits[idx] += 1;
+                return digits;
+            }
+            idx--;
+        }
+        digits.insert(digits.begin(), 1);
+        return digits;
+    }
+    
+    
+Java:
+----
+public int[] plusOne(int[] digits) {
+        int idx = digits.length-1;
+        while(idx >= 0){
+            if(digits[idx] == 9)
+                digits[idx] = 0;
+            else{
+                digits[idx] += 1;
+                return digits;
+            }
+            idx--;
+        }
+        int[] result = new int[digits.length + 1];
+        result[0] = 1;
+        return result;
+    }
+    
+    
+Python3:
+-------
+def plusOne(self, digits: List[int]) -> List[int]:
+        idx = len(digits) - 1
+        while idx >= 0:
+            if digits[idx] == 9:
+                digits[idx] = 0
+            else:
+                digits[idx] += 1
+                return digits
+            idx -= 1
+        
+        return [1] + digits
