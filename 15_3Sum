@@ -1,0 +1,79 @@
+Leetcode 15: 3Sum
+Detailed Video explanation: https://youtu.be/Ca7k53qcTic
+
+C++
+---
+vector<vector<int>> threeSum(vector<int>& nums) {
+        int n = nums.size();
+        if(n < 3) return {};
+        vector<vector<int>> result;
+        sort(nums.begin(), nums.end());
+        for(int i = 0; i < n-2; ++i){
+            if(i == 0 || nums[i] != nums[i-1]){
+                int j = i + 1, k = n-1;
+                while(j < k){
+                    int sum = nums[i] + nums[j] + nums[k];
+                    if(sum == 0){
+                        result.push_back({nums[i], nums[j], nums[k]});
+                        while(j < k && nums[j] == nums[j+1]) j++;
+                        while(j < k && nums[k] == nums[k-1]) k--;
+                        j++; k--;
+                    }
+                    else if (sum > 0) k--;
+                    else j++;
+                }
+            }
+        }
+        return result;
+    }
+    
+ Java:
+ ----
+ public List<List<Integer>> threeSum(int[] nums) {
+        int n = nums.length;
+        if(n < 3) return new ArrayList<List<Integer>>();
+        List<List<Integer>> result = new ArrayList();
+        Arrays.sort(nums);
+        for(int i = 0; i < n-2; ++i){
+            if(i == 0 || nums[i] != nums[i-1]){
+                
+                int j = i+1, k = n-1;
+                while(j < k){
+                    int sum = nums[i] + nums[j] + nums[k];
+                    if(sum == 0) {
+                        result.add(Arrays.asList(nums[i], nums[j], nums[k]));
+                        while(j < k && nums[j] == nums[j+1]) j++;
+                        while(j < k && nums[k] == nums[k-1]) k--;
+                        j++; k--;
+                    }
+                    else if (sum < 0) j++;
+                    else k--;
+                }
+            }
+        }
+        return result;
+    }
+    
+ 
+ Python3:
+ --------
+ def threeSum(self, nums: List[int]) -> List[List[int]]:
+        n = len(nums)
+        if n < 3: return []
+        result = []
+        nums.sort()
+        for i in range(n-2):
+            if i == 0 or nums[i] != nums[i-1]:
+                j,k = i+1, n-1
+                while j < k:
+                    sum = nums[i] + nums[j] + nums[k]
+                    if sum == 0:
+                        result.append([nums[i], nums[j], nums[k]])
+                        while j < k and nums[j] == nums[j+1]: j += 1
+                        while j < k and nums[k] == nums[k-1]: k -= 1
+                        j, k = j+1, k-1
+                    elif sum < 0: j += 1
+                    else: k -= 1
+        return result
+        
+ 
