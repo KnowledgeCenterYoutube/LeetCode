@@ -1,0 +1,47 @@
+Leetcode 662: Maximum width of Binary Tree
+Detailed video explanation: https://youtu.be/le-ZZSQRebw
+
+C++:
+----
+int widthOfBinaryTree(TreeNode* root) {
+        if(!root) return 0;
+        int result = 1;
+        queue<pair<TreeNode*, int>> Q;
+        Q.push({root, 0});
+        while(!Q.empty()){
+            int count = Q.size();
+            int start = Q.front().second;
+            int end = Q.back().second;
+            result = max(result, end-start+1);
+            for(int i = 0; i < count; ++i){
+                pair<TreeNode*, int> p = Q.front();
+                int idx = p.second - start;
+                Q.pop();
+                if(p.first->left) Q.push({p.first->left, 2*idx+1});
+                if(p.first->right) Q.push({p.first->right, 2*idx+2});
+            }
+            
+        }
+        return result;
+    }
+    
+    
+Python3:
+-------
+def widthOfBinaryTree(self, root: TreeNode) -> int:
+        if root == None: return 0
+        result = 1
+        Q = [[root, 0]]
+        while len(Q) > 0:
+            count = len(Q)
+            start = Q[0][1]
+            end = Q[-1][1]
+            result = max(result, end-start+1)
+            for i in range(count):
+                p = Q[0]
+                idx = p[1] - start
+                Q.pop(0)
+                if (p[0].left != None): Q.append([p[0].left, 2*idx+1])
+                if p[0].right != None: Q.append([p[0].right, 2*idx+2])
+            
+        return result
