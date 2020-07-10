@@ -17,7 +17,7 @@ class Solution {
                 curr->next = child;
                 curr->child = nullptr;
                 child->prev = curr;
-                curr = tail;
+                curr = _tail;
             }
             else
                 curr = next;
@@ -47,7 +47,7 @@ class Solution {
                 curr.next = child;
                 curr.child = null;
                 child.prev = curr;
-                curr = tail;
+                curr = _tail;
             }
             else
                 curr = next;
@@ -80,7 +80,7 @@ class Solution:
                 curr.next = child
                 curr.child = None
                 child.prev = curr
-                curr = tail
+                curr = _tail
             else:
                 curr = next
             if curr != None: tail = curr
