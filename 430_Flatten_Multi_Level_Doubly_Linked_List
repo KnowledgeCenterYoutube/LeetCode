@@ -1,0 +1,90 @@
+Leetcode 430: Flatten a Multilevel Doubly Linked List
+Deyailed video explanation: https://youtu.be/RIyPgR7AF7M
+
+C++:
+----
+class Solution {
+    Node* flatten_rec(Node* head){
+        Node* curr = head;
+        Node* tail = head;
+        while(curr){
+            Node* child = curr->child;
+            Node* next = curr->next;
+            if(child){
+                Node* _tail = flatten_rec(child);
+                _tail->next = next;
+                if(next) next->prev = _tail;
+                curr->next = child;
+                curr->child = nullptr;
+                child->prev = curr;
+                curr = tail;
+            }
+            else
+                curr = next;
+            if(curr) tail = curr;
+        }
+        return tail;
+    }
+public:
+    Node* flatten(Node* head) {
+        if(head) flatten_rec(head);
+        return head;
+    }
+};
+
+Java:
+----
+class Solution {
+    private Node flatten_rec(Node head){
+        Node curr = head, tail = head;
+        while(curr != null){
+            Node child = curr.child;
+            Node next = curr.next;
+            if(child != null){
+                Node _tail = flatten_rec(child);
+                _tail.next = next;
+                if(next != null) next.prev = _tail;
+                curr.next = child;
+                curr.child = null;
+                child.prev = curr;
+                curr = tail;
+            }
+            else
+                curr = next;
+            if(curr != null) tail = curr;
+        }
+        return tail;
+    }
+    public Node flatten(Node head) {
+        if(head != null) flatten_rec(head);
+        return head;
+    }
+}
+
+
+Python3:
+-------
+class Solution:
+    def flatten(self, head: 'Node') -> 'Node':
+        if head != None: self.flatten_rec(head)
+        return head
+        
+    def flatten_rec(self, head):
+        curr, tail = head, head
+        while curr != None:
+            child, next = curr.child, curr.next
+            if child != None:
+                _tail = self.flatten_rec(child)
+                _tail.next = next
+                if next != None: next.prev = _tail
+                curr.next = child
+                curr.child = None
+                child.prev = curr
+                curr = tail
+            else:
+                curr = next
+            if curr != None: tail = curr
+        
+        return tail
+        
+        
