@@ -1,0 +1,75 @@
+Leetcode 100: Same Tree
+Detailed video explanation of Recursive and Iterative Approach: 
+
+C++:
+====
+Recursive:
+----------
+bool isSameTree(TreeNode* p, TreeNode* q) {
+    if(!p && !q) return true;
+    if(!p || !q) return false;
+    if(p->val != q->val) return false;
+        
+    return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
+}
+
+Iterative:
+----------
+class Solution {
+    bool areEqual(TreeNode* p, TreeNode* q){
+        if(!p && !q) return true;
+        if(!p || !q) return false;
+        if(p->val != q->val) return false;
+        return true;
+    }
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        if(!areEqual(p, q)) return false;
+        queue<TreeNode*> Q1, Q2;
+        Q1.push(p);
+        Q2.push(q);
+        while(!Q1.empty()){
+            TreeNode* n1 = Q1.front(); 
+            Q1.pop();
+            TreeNode* n2 = Q2.front();
+            Q2.pop();
+            
+            if(!areEqual(n1, n2)) return false;
+            if(n1){
+                if(!areEqual(n1->left, n2->left)) return false;
+                if(n1->left){
+                    Q1.push(n1->left);
+                    Q2.push(n2->left);
+                }
+                if(!areEqual(n1->right, n2->right)) return false;
+                if(n1->right){
+                    Q1.push(n1->right);
+                    Q2.push(n2->right);
+                }
+            }
+        }
+        return true;
+    }
+    
+    
+Java:
+=====
+public boolean isSameTree(TreeNode p, TreeNode q) {
+    if(p == null && q == null) return true;
+    if(p == null || q == null) return false;
+    if(p.val != q.val) return false;
+        
+    return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+}
+
+
+Python3:
+========
+def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
+    if p == None and q == None: return True
+    if p == None or q == None: return False
+    if p.val != q.val: return False
+    
+    return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+    
+    
