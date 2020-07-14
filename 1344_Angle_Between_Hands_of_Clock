@@ -1,0 +1,35 @@
+Leetcode 1344: Angle Between Hands of a Clock
+Detailed video explanation: https://youtu.be/FK_wnA0ERBQ
+
+C++:
+----
+double angleClock(int hour, int minutes) {
+    float h = (hour%12 + (float)minutes/60)*30;
+    float m = minutes*6;
+    float angle = fabs(h-m);
+    if(angle > 180) angle = 360-angle;
+    return angle;
+}
+
+
+Java:
+-----
+public double angleClock(int hour, int minutes) {
+    float h = (hour%12 + (float)minutes/60)*30;
+    float m = minutes*6;
+    float angle = Math.abs(h-m);
+    if(angle > 180) angle = 360-angle;
+    return angle;
+}
+
+
+Python3:
+-------
+def angleClock(self, hour: int, minutes: int) -> float:
+    h = (hour%12 + minutes/60)*30
+    m = minutes*6
+    angle = abs(h-m)
+    if angle > 180: angle = 360-angle
+    return angle
+    
+    
