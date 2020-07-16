@@ -1,0 +1,46 @@
+Leetcode 50: Pow(x, n)
+Detailed video explanation: https://youtu.be/snOaKR2xgZg
+=======================================================
+
+C++:
+----
+double pow_util(double x, long n){
+    if(n == 0) return 1.0;
+    if(n == 1) return x;
+    if(n < 0) return pow_util(1/x, -n);
+    double result = pow_util(x*x, n/2);
+    if(n%2) result *= x;
+    return result;
+}
+
+double myPow(double x, int n) {
+    return pow_util(x,n);
+}
+
+
+Java:
+-----
+private double pow_util(double x, long n){
+    if(n == 0) return 1.0;
+    if(n == 1) return x;
+    if(n < 0) return pow_util(1/x, -n);
+    double result = pow_util(x*x, n/2);
+    if(n%2 == 1) result *= x;
+    return result;
+}
+public double myPow(double x, int n) {
+    return pow_util(x, n);
+}
+
+
+Python3:
+--------
+def myPow(self, x: float, n: int) -> float:
+    if n == 0: return 1.0
+    if n == 1: return x
+    if n < 0: return self.myPow(1/x, -n)
+    result = self.myPow(x, n//2)
+    result *= result
+    if n%2 == 1: result *= x
+    return result
+    
