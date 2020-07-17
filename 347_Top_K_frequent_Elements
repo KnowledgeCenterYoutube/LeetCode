@@ -1,0 +1,87 @@
+Leetcode 347: Top K Frequent Elements
+Detailed video explanation: https://youtu.be/X45CT-YbzKE
+======================================
+
+C++:
+Method 1: [Sorting]
+vector<int> topKFrequent(vector<int>& nums, int k) {
+    if(k == nums.size()) return nums;
+    vector<int> result;
+    auto cmp = [](pair<int, int>& a, pair<int, int>& b){
+        return a.second < b.second;
+    };
+    priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(cmp)> PQ(cmp);
+    
+    sort(nums.begin(), nums.end());
+    int x = nums[0], n = nums.size(), pos = 0;
+    
+    for(int i = 0; i < n; ++i){
+        if(nums[i] != x) {
+            PQ.push({x, i-pos});
+            x = nums[i];
+            pos = i;
+        }
+    }
+    PQ.push({nums.back(), n-pos});
+
+    while(k){
+        result.push_back(PQ.top().first);
+        PQ.pop();
+        k--;
+    }
+    return result;
+}
+
+Method 2: [Hash Maps]
+vector<int> topKFrequent(vector<int>& nums, int k) {
+        if(k == nums.size()) return nums;
+        vector<int> result;
+        unordered_map<int, int> counts;
+        for(int x: nums){
+            counts[x] += 1;
+        }
+        auto cmp = [](pair<int, int>& a, pair<int, int>& b){
+            return a.second < b.second;
+        };
+        priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(cmp)> PQ(cmp);
+        for(pair x: counts){
+            PQ.push(x);
+        }
+        
+        while(k){
+            result.push_back(PQ.top().first);
+            PQ.pop();
+            k--;
+        }
+        return result;
+    }
+    
+    
+Java:
+public int[] topKFrequent(int[] nums, int k) {
+        if(k == nums.length) return nums;
+        int[] result = new int[k];
+        
+        Map<Integer, Integer> counts = new HashMap();
+        for(int x: nums){
+            counts.put(x, counts.getOrDefault(x, 0) + 1);
+        }
+        Queue<Integer> PQ = new PriorityQueue<>((a, b) -> counts.get(b) - counts.get(a));
+        for(int x: counts.keySet()){
+            PQ.add(x);
+        }
+        
+        for(int i = 0; i < k; ++i)
+            result[i] = PQ.poll();
+        return result;
+    }
+    
+    
+Python:
+def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        if k == len(nums): return nums
+        
+        counts = Counter(nums)   
+
+        return heapq.nlargest(k, counts.keys(), key = counts.get) 
+Detailed video explanation: https://youtu.be/X45CT-YbzKE
