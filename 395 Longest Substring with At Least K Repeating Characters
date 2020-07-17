@@ -1,0 +1,66 @@
+Leetcode 395: Longest Substring with At Least K Repeating Characters
+Detailed Video Explanation: https://youtu.be/bHZkCAcj3dc
+===================================================================
+
+C++:
+----
+int longestSubstring(string s, int k) {
+    int n = s.length();
+    if(n == 0 || n < k) return 0;
+    if(k <= 1) return n;
+
+    unordered_map<char, int> counts;
+    for(char c: s) counts[c] += 1;
+
+    int l = 0;
+    while(l < n && counts[s[l]] >= k) l++;
+    if(l >= n-1) return l;
+
+    int ls1 = longestSubstring(s.substr(0, l), k);
+    while(l < n && counts[s[l]] < k) l++;
+    int ls2 = (l < n) ? longestSubstring(s.substr(l), k) : 0;
+    return max(ls1, ls2);
+}
+
+
+Java:
+-----
+public int longestSubstring(String s, int k) {
+    int n = s.length();
+    if(n == 0 || n < k) return 0;
+    if(k <= 1) return n;
+
+    Map<Character, Integer> counts = new HashMap();
+    for(char c: s.toCharArray()) 
+        counts.put(c, counts.getOrDefault(c, 0) + 1);
+
+    int l = 0;
+    while(l < n && counts.get(s.charAt(l)) >= k) l++;
+    if(l >= n-1) return l;
+
+    int ls1 = longestSubstring(s.substring(0, l), k);
+    while(l < n && counts.get(s.charAt(l)) < k) l++;
+    int ls2 = (l < n) ? longestSubstring(s.substring(l), k) : 0;
+    return Math.max(ls1, ls2);
+}
+
+
+Python3:
+-------
+def longestSubstring(self, s: str, k: int) -> int:
+    n = len(s)
+    if n == 0 or n < k: return 0
+    if k <= 1: return n
+
+    counts = Counter(s)
+
+    l = 0
+    while l < n and counts[s[l]] >= k: l += 1
+    if l >= n-1: return l
+
+    ls1 = self.longestSubstring(s[0:l], k)
+    while l < n and counts[s[l]] < k: l += 1
+    ls2 = self.longestSubstring(s[l:], k) if l<n else 0
+    return max(ls1, ls2)
+    
+    
