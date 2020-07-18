@@ -1,0 +1,90 @@
+Leetcode 210: Course Schedule II
+Detailed video Explanation: https://youtu.be/_BGK0kpE4oE
+=======================================================
+
+C++:
+---
+class Solution {
+    bool dfs(int u, vector<vector<int>>& adj, vector<int>& s, vector<int>& visited){
+        visited[u] = 1;
+        for(int v : adj[u]){
+            if(visited[v] == 1) return true;
+            if(visited[v] == 0 && dfs(v, adj, s, visited)) return true;
+        }
+        visited[u] = 2;
+        s.push_back(u);
+        return false;
+    }
+public:
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> adj(numCourses);
+        for(vector<int>& courses: prerequisites)
+            adj[courses[1]].push_back(courses[0]);
+        
+        vector<int> s;
+        vector<int> visited(numCourses, 0);
+        for(int i = 0; i < numCourses; ++i)
+            if(visited[i] == 0 && dfs(i, adj, s, visited)) return {};
+        reverse(s.begin(), s.end());
+        return s;
+    }
+};
+
+Java:
+-----
+class Solution {
+    private boolean dfs(int u, List<Integer>[] adj, List<Integer> s, int[] visited){
+        visited[u] = 1;
+        for(int v : adj[u]){
+            if(visited[v] == 1) return true;
+            if(visited[v] == 0 && dfs(v, adj, s, visited)) return true;
+        }
+        visited[u] = 2;
+        s.add(u);
+        return false;
+    }
+    
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        List<Integer>[] adj = new LinkedList[numCourses];
+        for(int i = 0; i < numCourses; ++i)
+            adj[i] = new LinkedList<Integer>();
+        for(int[] courses: prerequisites)
+            adj[courses[1]].add(courses[0]);
+        
+        List<Integer> s = new LinkedList();
+        int[] visited = new int[numCourses];
+        for(int i = 0; i < numCourses; ++i)
+            if(visited[i] == 0 && dfs(i, adj, s, visited)) return new int[0];
+        Collections.reverse(s);
+        int[] result = s.stream().mapToInt(Integer::intValue).toArray();
+        return result;
+    }
+}
+
+Python3:
+-------
+class Solution:
+    def dfs(self, u):
+        self.visited[u] = 1
+        for v in self.adj[u]:
+            if self.visited[v] == 1: return True
+            if self.visited[v] == 0 and self.dfs(v): return True
+        
+        self.visited[u] = 2
+        self.s.append(u)
+        return False
+
+    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        self.adj = [[] for i in range(numCourses)]
+        for courses in prerequisites:
+            self.adj[courses[1]].append(courses[0])
+        
+        self.s = []
+        self.visited = [0]*numCourses
+        for i in range(numCourses):
+            if self.visited[i] == 0 and self.dfs(i): return []
+        self.s.reverse()
+        return self.s
+        
+        
+        
