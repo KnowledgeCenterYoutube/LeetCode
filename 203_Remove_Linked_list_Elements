@@ -1,0 +1,67 @@
+Leetcode 203: Remove Linked List Elements
+Detailed video explanation: https://youtu.be/YIng7Pf6oa4
+==============================================
+
+C++:
+====
+Iterative:
+----------
+ListNode* removeElements(ListNode* head, int val) {
+        if(!head) return head;
+        ListNode *prev = nullptr, *curr = head;
+        while(curr){
+            if(curr->val == val){
+                if(!prev)
+                    head = curr->next;
+                else
+                    prev->next = curr->next;
+            }else
+                prev = curr;
+            curr = curr->next;
+        }
+        return head;
+    }
+    
+Recursive:
+---------
+ListNode* removeElements(ListNode* head, int val) {
+        if(!head) return head;
+        ListNode * h = removeElements(head->next, val);
+        if(head->val == val) return h;
+        head->next = h;
+        return head;
+    }
+    
+    
+Java:
+====
+public ListNode removeElements(ListNode head, int val) {
+        if(head == null) return head;
+        ListNode prev = null, curr = head;
+        while(curr != null){
+            if(curr.val == val){
+                if(prev == null)
+                    head = curr.next;
+                else
+                    prev.next = curr.next;
+            }else
+                prev = curr;
+            curr = curr.next;
+        }
+        return head;
+    }
+    
+    
+Python3:
+=======
+def removeElements(self, head: ListNode, val: int) -> ListNode:
+    if head == None: return head
+    prev, curr = None, head
+    while curr != None:
+        if curr.val == val:
+            if prev == None: head = curr.next
+            else: prev.next = curr.next
+        else:prev = curr
+        curr = curr.next
+    return head
+
