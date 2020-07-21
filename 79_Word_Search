@@ -1,0 +1,79 @@
+Leetcode 79: Word Search
+Detailed video explanation: https://youtu.be/X0kX7PMOYi0
+=======================================
+
+C++:
+---
+class Solution {
+    bool search(vector<vector<char>>& board, int i, int j, string& word, int idx){
+        if(idx == word.length() - 1) return true;
+        board[i][j] -= 65;
+        if(i > 0 && board[i-1][j] == word[idx+1] && search(board, i-1, j, word, idx+1)) return true;
+        if(j > 0 && board[i][j-1] == word[idx+1] && search(board, i, j-1, word, idx+1)) return true;
+        if(i < board.size()-1 && board[i+1][j] == word[idx+1] && search(board, i+1, j, word, idx+1)) return true;
+        if(j < board[0].size()-1 && board[i][j+1] == word[idx+1] && search(board, i, j+1, word, idx+1)) return true;
+        board[i][j] += 65;
+        return false;
+}
+
+public:
+    bool exist(vector<vector<char>>& board, string word) {
+        int r = board.size();
+        if(r == 0) return false;
+        int c = board[0].size();
+        for(int i = 0; i < r; ++i)
+            for(int j = 0; j < c; ++j)
+                if(board[i][j] == word[0] && search(board, i, j, word, 0)) return true;
+        return false;
+    }
+};
+
+Java:
+-----
+class Solution {
+    private boolean search(char[][] board, int i, int j, String word, int idx){
+        if(idx == word.length() - 1) return true;
+        board[i][j] -= 65;
+        if(i > 0 && board[i-1][j] == word.charAt(idx+1) && search(board, i-1, j, word, idx+1)) return true;
+        if(j > 0 && board[i][j-1] == word.charAt(idx+1) && search(board, i, j-1, word, idx+1)) return true;
+        if(i < board.length-1 && board[i+1][j] == word.charAt(idx+1) && search(board, i+1, j, word, idx+1)) return true;
+        if(j < board[0].length-1 && board[i][j+1] == word.charAt(idx+1) && search(board, i, j+1, word, idx+1)) return true;
+        board[i][j] += 65;
+        return false;
+    }
+    
+    public boolean exist(char[][] board, String word) {
+        int r = board.length;
+        if(r == 0) return false;
+        int c = board[0].length;
+        for(int i = 0; i < r; ++i)
+            for(int j = 0; j < c; ++j)
+                if(board[i][j] == word.charAt(0) && search(board, i, j, word, 0)) return true;
+        return false;
+    }
+}
+
+
+Python3:
+--------
+class Solution:
+    def search(self, i, j, idx):
+        if idx == len(self.word) - 1: return True
+        self.board[i][j] = chr(ord(self.board[i][j]) - 65)
+        if i > 0 and self.board[i-1][j] == self.word[idx+1] and self.search(i-1, j, idx+1): return True
+        if j > 0 and self.board[i][j-1] == self.word[idx+1] and self.search(i, j-1, idx+1): return True
+        if i < len(self.board)-1 and self.board[i+1][j] == self.word[idx+1] and self.search(i+1, j, idx+1): return True
+        if j < len(self.board[0])-1 and self.board[i][j+1] == self.word[idx+1] and self.search(i, j+1, idx+1): return True
+        self.board[i][j] = chr(ord(self.board[i][j]) + 65)
+        return False
+    
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        r = len(board)
+        if r == 0: return False
+        c = len(board[0])
+        self.board = board
+        self.word = word
+        for i in range(r):
+            for j in range(c):
+                if board[i][j] == word[0] and self.search(i, j, 0): return True
+        return False
