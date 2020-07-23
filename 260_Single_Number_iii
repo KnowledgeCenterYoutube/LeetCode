@@ -1,0 +1,48 @@
+Leetcode 260: Single Number III
+Detailed video explanation: https://youtu.be/L-EaPf5tD5A
+============================================
+
+C++:
+----
+vector<int> singleNumber(vector<int>& nums) {
+        int xy = 0;
+        for(int n: nums) xy ^= n;
+        xy &= -xy;
+        vector<int> result = {0, 0};
+        for(int n: nums){
+            if(xy & n) result[0] ^= n;
+            else result[1] ^= n;
+        }
+        return result;
+    }
+    
+
+Java:
+-----
+class Solution {
+    public int[] singleNumber(int[] nums) {
+        int xy = 0;
+        for(int n: nums) xy ^= n;
+        xy &= -xy;
+        int[] result = new int[2];
+        for(int n: nums){
+            if((xy & n) == 0) result[0] ^= n;
+            else result[1] ^= n;
+        }
+        return result;
+    }
+}
+
+
+Python3:
+-------
+class Solution:
+    def singleNumber(self, nums: List[int]) -> List[int]:
+        xy = 0
+        for n in nums: xy ^= n
+        xy &= -xy
+        result = [0]*2
+        for n in nums:
+            if (xy & n) == 0: result[0] ^= n
+            else: result[1] ^= n
+        return result
