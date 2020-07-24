@@ -1,0 +1,57 @@
+Leetcode 797: All Paths From Source to Target
+Detailed video explanation: https://youtu.be/SZ3zpzQk2jg
+========================================================
+
+C++:
+----
+class Solution {
+    void dfs(vector<vector<int>>& graph, vector<vector<int>>& result, vector<int>& path, int u){
+        path.push_back(u);
+        if(u == graph.size()-1) result.push_back(path);
+        else 
+            for(int v: graph[u]) dfs(graph, result, path, v);
+        path.pop_back();
+    }
+public:
+    vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
+        vector<vector<int>> result;
+        vector<int> path;
+        dfs(graph, result, path, 0);
+        return result;
+    }
+};
+
+Java:
+-----
+class Solution {
+    private void dfs(int[][] graph, List<List<Integer>> result, List<Integer> path, int u){
+        path.add(u);
+        if(u == graph.length-1) result.add(new ArrayList(path));
+        else 
+            for(int v: graph[u]) dfs(graph, result, path, v);
+        path.remove(path.size()-1);
+    }
+    
+    public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+        List<List<Integer>> result = new ArrayList();
+        List<Integer> path = new ArrayList();
+        dfs(graph, result, path, 0);
+        return result;
+    }
+}
+
+Python3:
+--------
+class Solution:
+    def allPathsSourceTarget(self, graph: List[List[int]]) -> List[List[int]]:
+        result = []
+    
+        def dfs(path, u):
+            if u == len(graph)-1: result.append(path + [u])
+            else:
+                for v in graph[u]: dfs(path + [u], v)
+            
+        dfs([], 0)
+        return result
+    
+
