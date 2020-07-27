@@ -1,0 +1,74 @@
+Leetcode 106: Construct Binary Tree from Inorder and Postorder Traversal
+Detailed video explanation: https://youtu.be/bw0o6v1lQYs
+=========================================================================
+
+C++:
+----
+class Solution {
+    TreeNode* buildTree_rec(vector<int>& inorder, int i1, int i2, vector<int>& postorder, int p1, int p2) {
+        if(i1 >= i2 || p1 >= p2) return nullptr;
+        TreeNode *root = new TreeNode(postorder[p2-1]);
+        auto it = find(inorder.begin() + i1, inorder.begin() + i2, postorder[p2-1]);
+        int diff = it - inorder.begin() - i1;
+        root->left = buildTree_rec(inorder, i1, i1 + diff, postorder, p1, p1 + diff);
+        root->right = buildTree_rec(inorder, i1 + diff + 1, i2, postorder, p1+diff, p2-1);
+        
+        return root;
+    }
+public:
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        int n = inorder.size();
+        if(n == 0) return nullptr;
+        
+        return buildTree_rec(inorder, 0, n, postorder, 0, n);
+    }
+};
+
+
+Java:
+-----
+class Solution {
+    private TreeNode build_tree_rec(int[] inorder, int i1, int i2, int[] postorder, int p1, int p2){
+        if(i1 >= i2 || p1 >= p2) return null;
+        TreeNode root = new TreeNode(postorder[p2-1]);
+        int it = 0;
+        for(int i = i1; i < i2; ++i){
+            if(postorder[p2-1] == inorder[i]) {
+                it = i;
+                break;
+            }
+        }
+        int diff = it - i1;
+        root.left = build_tree_rec(inorder, i1, i1 + diff, postorder, p1, p1+diff);
+        root.right = build_tree_rec(inorder, i1+diff+1, i2, postorder, p1+diff, p2-1);
+        
+        return root;
+    }
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        int n = inorder.length;
+        if(n == 0) return null;
+        
+        return build_tree_rec(inorder, 0, n, postorder, 0, n);
+    }
+}
+
+
+Python3:
+-------
+class Solution:
+    def build_tree_rec(self, i1, i2, p1, p2):
+        if i1 >= i2 or p1 >= p2: return None
+        root = TreeNode(self.postorder[p2-1])
+        it = self.inorder.index(self.postorder[p2-1])
+        diff = it - i1
+        root.left = self.build_tree_rec(i1, i1 + diff, p1, p1+diff)
+        root.right = self.build_tree_rec(i1 + diff + 1, i2, p1+diff, p2-1)
+        return root
+    
+    def buildTree(self, inorder: List[int], postorder: List[int]) -> TreeNode:
+        n = len(inorder)
+        if n == 0: return None
+        self.inorder = inorder
+        self.postorder = postorder
+        return self.build_tree_rec(0, n, 0, n)
+        
