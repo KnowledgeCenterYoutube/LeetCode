@@ -1,0 +1,50 @@
+Leetcode 140: Word Break ii
+Detailed video explanation: https://youtu.be/9-grHHGUVls
+========================================================
+
+C++:
+----
+class Solution {
+    unordered_map<string, vector<string>> dp;
+public:
+    vector<string> wordBreak(string s, vector<string>& wordDict) {
+        if(dp.find(s) != dp.end()) return dp[s];
+        vector<string> result;
+        for(string w : wordDict){
+            if(s.substr(0, w.length()) == w){
+                if(w.length() == s.length())
+                    result.push_back(w);
+                else{
+                    vector<string> tmp = wordBreak(s.substr(w.length()), wordDict);
+                    for(string t : tmp)
+                        result.push_back(w + " " + t);
+                }
+            }
+        }
+        dp[s] = result;
+        return result;
+    }
+};
+
+
+Python3:
+--------
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:
+        dp = {}
+        def word_break(s):
+            if s in dp: return dp[s]
+            result = []
+            for w in wordDict:
+                if s[:len(w)] == w:
+                    if len(w) == len(s): result.append(w)
+                    else:
+                        tmp = word_break(s[len(w):])
+                        for t in tmp:
+                            result.append(w + " " + t)
+            dp[s] = result
+            return result
+        
+        return word_break(s)
+        
+        
