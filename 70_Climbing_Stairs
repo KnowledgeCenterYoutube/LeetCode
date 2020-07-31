@@ -1,0 +1,48 @@
+Leetcode 70: Climbing Stairs
+Detailed video explanation: https://youtu.be/AWezsCJDHSk
+===================================================
+
+C++:
+---
+class Solution {
+public:
+    int climbStairs(int n) {
+        if(n <= 2) return n;
+        int x = 1, y = 2;
+        for(int i = 3; i < n; ++i){
+            int tmp = y;
+            y += x;
+            x = tmp;
+        }
+        return (x+y);
+    }
+};
+
+
+Java:
+----
+class Solution {
+public:
+    int climbStairs(int n) {
+        if(n <= 2) return n;
+        int x = 1, y = 2;
+        for(int i = 3; i < n; ++i){
+            int tmp = y;
+            y += x;
+            x = tmp;
+        }
+        return (x+y);
+    }
+};
+
+
+Python3:
+-------
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        if n <= 2: return n
+        x, y = 1, 2
+        for i in range(3,n):
+            x, y = y, x+y
+        return x+y
+
