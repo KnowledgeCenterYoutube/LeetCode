@@ -1,0 +1,75 @@
+Leetcode 359 : Logger Rate Limiter
+Detailed video Explanation: https://youtu.be/GXmMeKGSfP4
+=====================================================
+
+
+C++:
+----
+class Logger {
+    unordered_map<string, int> map0_10, map10_20;
+    int t;
+public:
+    /** Initialize your data structure here. */
+    Logger():t(0) {
+        
+    }
+    
+    /** Returns true if the message should be printed in the given timestamp, otherwise returns false.
+        If this method returns false, the message will not be printed.
+        The timestamp is in seconds granularity. */
+    bool shouldPrintMessage(int timestamp, string message) {
+        if(timestamp >= t + 10){
+            map10_20 = map0_10;
+            map0_10.clear();
+            t = timestamp;
+        }
+        if(map0_10.find(message) != map0_10.end()) return false;
+        int ts = map10_20[message];
+        if(ts && timestamp < ts + 10) return false;
+        map0_10[message] = timestamp;
+        return true;
+    }
+};
+
+/**
+ * Your Logger object will be instantiated and called as such:
+ * Logger* obj = new Logger();
+ * bool param_1 = obj->shouldPrintMessage(timestamp,message);
+ */
+ 
+ 
+ Python3:
+ -------
+ class Logger:
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.map0_10, self.map10_20 = {}, {}
+        self.t = 0
+        
+
+    def shouldPrintMessage(self, timestamp: int, message: str) -> bool:
+        """
+        Returns true if the message should be printed in the given timestamp, otherwise returns false.
+        If this method returns false, the message will not be printed.
+        The timestamp is in seconds granularity.
+        """
+        if timestamp >= self.t + 10:
+            self.map10_20 = self.map0_10
+            self.map0_10 = {}
+            self.t = timestamp
+        
+        if message in self.map0_10: return False
+        if message in self.map10_20 and timestamp < self.map10_20[message] + 10: return False
+        self.map0_10[message] = timestamp
+        return True
+        
+
+
+# Your Logger object will be instantiated and called as such:
+# obj = Logger()
+# param_1 = obj.shouldPrintMessage(timestamp,message)
+ 
+ 
