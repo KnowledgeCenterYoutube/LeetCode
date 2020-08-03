@@ -1,0 +1,32 @@
+Leetcode 168: Excel Sheet Column Title
+Detailed video explanation: https://youtu.be/UcTKk2y_3s4
+================================================
+
+C++:
+----
+class Solution {
+public:
+    string convertToTitle(int n) {
+        string result = "";
+        while(n){
+            char c = 'A' + (n-1) % 26;
+            result = c + result;
+            n = (n-1)/26;
+        }
+        return result;
+    }
+};
+
+
+Python3:
+--------
+class Solution:
+    def convertToTitle(self, n: int) -> str:
+        result = ""
+        while n > 0:
+            c = chr(ord('A') + (n-1) % 26)
+            result = c + result
+            n = (n-1)//26
+        
+        return result
+
