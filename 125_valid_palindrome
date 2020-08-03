@@ -1,0 +1,55 @@
+Leetcode 125: Valid Palindrome
+Detailed video explanation: https://youtu.be/028pTf2kBFI
+=========================================================
+
+
+C++:
+----
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        if(s.length() <= 1) return true;
+        int st = 0, en = s.length()-1;
+        while(st < en){
+            while(st < en && !isalnum(s[st])) st++;
+            while(st < en && !isalnum(s[en])) en--;
+            if(st < en && tolower(s[st]) != tolower(s[en])) return false;
+            st++;
+            en--;
+        }
+        return true;
+    }
+};
+
+
+Java:
+----
+class Solution {
+    public boolean isPalindrome(String s) {
+        if(s.length() <= 1) return true;
+        int st = 0, en = s.length()-1;
+        while(st < en){
+            while(st < en && !Character.isLetterOrDigit(s.charAt(st))) st++;
+            while(st < en && !Character.isLetterOrDigit(s.charAt(en))) en--;
+            if(st < en && Character.toLowerCase(s.charAt(st)) != Character.toLowerCase(s.charAt(en))) return false;
+            st++;
+            en--;
+        }
+        return true;
+    }
+}
+
+
+Python3:
+--------
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        if len(s) <= 1: return True
+        st, en = 0, len(s)-1
+        while st < en:
+            while st < en and not s[st].isalnum(): st += 1
+            while st < en and not s[en].isalnum(): en -= 1
+            if st < en and s[st].lower() != s[en].lower(): return False
+            st, en = st+1, en-1
+        return True
+
