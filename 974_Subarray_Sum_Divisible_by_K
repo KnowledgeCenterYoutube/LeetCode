@@ -1,0 +1,57 @@
+Leetcode 974: Subarray Sum Divisible By K
+Detailed video Explanation: https://youtu.be/u9m-hnlcydk
+================================================
+
+
+C++:
+----
+class Solution {
+public:
+    int subarraysDivByK(vector<int>& A, int K) {
+        vector<int> counts(K, 0);
+        int sum = 0;
+        for(int x: A){
+            sum += (x%K + K)%K;
+            counts[sum % K]++;
+        }
+        int result = counts[0];
+        for(int c : counts)
+            result += (c*(c-1))/2;
+        return result;
+    }
+};
+
+
+Java:
+-----
+class Solution {
+    public int subarraysDivByK(int[] A, int K) {
+        int[] counts = new int[K];
+        int sum = 0;
+        for(int x: A){
+            sum += (x%K + K)%K;
+            counts[sum % K]++;
+        }
+        int result = counts[0];
+        for(int c : counts)
+            result += (c*(c-1))/2;
+        return result;
+    }
+}
+
+
+Python3:
+-------
+class Solution:
+    def subarraysDivByK(self, A: List[int], K: int) -> int:
+        counts = [0]*K
+        sum = 0
+        for x in A:
+            sum += x%K
+            counts[sum % K] += 1
+        result = counts[0]
+        for c in counts:
+            result += (c*(c-1))//2
+        return result
+
+
