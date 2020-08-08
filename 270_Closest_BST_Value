@@ -1,0 +1,59 @@
+Leetcode 270: Closest Binary Search Tree Value
+Detailed video explanation: https://youtu.be/lIKZB_rhFNM
+=================================================
+
+C++:
+----
+class Solution {
+public:
+    int closestValue(TreeNode* root, double target) {
+        if(root->val > target && root->left) {
+            int l = closestValue(root->left, target);
+            if(abs(l-target) < abs(root->val-target)) return l;
+            return root->val;
+        }
+        if(root->val < target && root->right) {
+            int r = closestValue(root->right, target);
+            if(abs(r-target) < abs(root->val-target)) return r;
+            return root->val;
+        }
+        return root->val;
+    }
+};
+
+
+Java:
+----
+class Solution {
+    public int closestValue(TreeNode root, double target) {
+        if(root.val > target && root.left != null) {
+            int l = closestValue(root.left, target);
+            if(Math.abs(l-target) < Math.abs(root.val-target)) return l;
+            return root.val;
+        }
+        if(root.val < target && root.right != null) {
+            int r = closestValue(root.right, target);
+            if(Math.abs(r-target) < Math.abs(root.val-target)) return r;
+            return root.val;
+        }
+        return root.val;
+    }
+}
+
+
+Python3:
+-------
+class Solution:
+    def closestValue(self, root: TreeNode, target: float) -> int:
+        if root.val > target and root.left != None: 
+            l = self.closestValue(root.left, target)
+            if abs(l-target) < abs(root.val-target): return l
+            return root.val
+        if root.val < target and root.right != None: 
+            r = self.closestValue(root.right, target)
+            if abs(r-target) < abs(root.val-target): return r
+            return root.val
+        return root.val
+
+
+
