@@ -1,0 +1,90 @@
+Leetcode 994: Rotting Oranges
+Detailed video explanation: https://youtu.be/XiUmnWXh-9E
+===================================================
+
+
+C++:
+----
+class Solution {
+public:
+    int orangesRotting(vector<vector<int>>& grid) {
+        queue<pair<int, int>> rotten;
+        int r = grid.size(), c = grid[0].size(), fresh = 0, t = 0;
+        for(int i = 0; i < r; ++i){
+            for(int j = 0; j < c; ++j){
+                if(grid[i][j] == 2) rotten.push({i, j});
+                else if(grid[i][j] == 1) fresh++;
+            }
+        }
+        
+        while(!rotten.empty()){
+            int num = rotten.size();
+            for(int i = 0; i < num; ++i){
+                int x = rotten.front().first, y = rotten.front().second;
+                rotten.pop();
+                if(x > 0 && grid[x-1][y] == 1){ grid[x-1][y] = 2; fresh--; rotten.push({x-1, y});};
+                if(y > 0 && grid[x][y-1] == 1){ grid[x][y-1] = 2; fresh--; rotten.push({x, y-1});};
+                if(x < r-1 && grid[x+1][y] == 1){ grid[x+1][y] = 2; fresh--; rotten.push({x+1, y});};
+                if(y < c-1 && grid[x][y+1] == 1){ grid[x][y+1] = 2; fresh--; rotten.push({x, y+1});};
+            }
+            if(!rotten.empty()) t++;
+        }
+        return (fresh == 0) ? t : -1;
+    }
+};
+
+
+Java:
+-----
+class Solution {
+    public int orangesRotting(int[][] grid) {
+        Queue<int[]> rotten = new LinkedList();
+        int r = grid.length, c = grid[0].length, fresh = 0, t = 0;
+        for(int i = 0; i < r; ++i){
+            for(int j = 0; j < c; ++j){
+                if(grid[i][j] == 2) rotten.add(new int[]{i, j});
+                else if(grid[i][j] == 1) fresh++;
+            }
+        }
+        
+        while(!rotten.isEmpty()){
+            int num = rotten.size();
+            for(int i = 0; i < num; ++i){
+                int x = rotten.peek()[0], y = rotten.peek()[1];
+                rotten.remove();
+                if(x > 0 && grid[x-1][y] == 1){ grid[x-1][y] = 2; fresh--; rotten.add(new int[]{x-1, y});};
+                if(y > 0 && grid[x][y-1] == 1){ grid[x][y-1] = 2; fresh--; rotten.add(new int[]{x, y-1});};
+                if(x < r-1 && grid[x+1][y] == 1){ grid[x+1][y] = 2; fresh--; rotten.add(new int[]{x+1, y});};
+                if(y < c-1 && grid[x][y+1] == 1){ grid[x][y+1] = 2; fresh--; rotten.add(new int[]{x, y+1});};
+            }
+            if(!rotten.isEmpty()) t++;
+        }
+        return (fresh == 0) ? t : -1;
+    }
+}
+
+
+Python3:
+-------
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        rotten = []
+        r, c, fresh, t = len(grid), len(grid[0]), 0, 0
+        for i in range(r):
+            for j in range(c):
+                if grid[i][j] == 2: rotten.append([i, j])
+                elif grid[i][j] == 1: fresh += 1
+        
+        while len(rotten) > 0:
+            num = len(rotten)
+            for i in range(num):
+                x, y = rotten[0]
+                rotten.pop(0);
+                if x > 0 and grid[x-1][y] == 1: grid[x-1][y] = 2; fresh -= 1; rotten.append([x-1, y])
+                if y > 0 and grid[x][y-1] == 1: grid[x][y-1] = 2; fresh -= 1; rotten.append([x, y-1])
+                if x < r-1 and grid[x+1][y] == 1: grid[x+1][y] = 2; fresh -= 1; rotten.append([x+1, y])
+                if y < c-1 and grid[x][y+1] == 1: grid[x][y+1] = 2; fresh -= 1; rotten.append([x, y+1])
+            if len(rotten) > 0: t += 1
+        
+        return t if (fresh == 0) else -1
+
