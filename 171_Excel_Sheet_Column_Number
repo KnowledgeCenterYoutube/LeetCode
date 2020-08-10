@@ -1,0 +1,46 @@
+Leetcode 171: Excel Sheet Column Number
+Detailed video explanation: https://youtu.be/g-l4UpF62x0
+================================================
+
+
+C++:
+----
+class Solution {
+public:
+    int titleToNumber(string s) {
+        int result = 0;
+        for(char c : s){
+            int d = c - 'A' + 1;
+            result = result*26 + d;
+        }
+        return result;
+    }
+};
+
+
+Java:
+-----
+class Solution {
+    public int titleToNumber(String s) {
+        int result = 0;
+        for(char c : s.toCharArray()){
+            int d = c - 'A' + 1;
+            result = result*26 + d;
+        }
+        return result;
+    }
+}
+
+
+
+Python3:
+-------
+class Solution:
+    def titleToNumber(self, s: str) -> int:
+        result = 0
+        for c in s:
+            d = ord(c) - ord('A') + 1
+            result = result*26 + d
+        return result
+
+
