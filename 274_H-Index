@@ -1,0 +1,42 @@
+Leetcode 274: H-Index
+Detailed video explanation: https://youtu.be/zzTUtpBQh4k
+========================================================
+
+C++:
+----
+class Solution {
+public:
+    int hIndex(vector<int>& citations) {
+        sort(citations.begin(), citations.end());
+        int n = citations.size(), i;
+        for(i = 1; i <= n; ++i)
+            if(citations[n-i] < i) break;
+        return i-1;
+    }
+};
+
+
+Java:
+-----
+class Solution {
+    public int hIndex(int[] citations) {
+        Arrays.sort(citations);
+        int n = citations.length, i;
+        for(i = 1; i <= n; ++i)
+            if(citations[n-i] < i) break;
+        return i-1;
+    }
+}
+
+
+Python3:
+-------
+class Solution:
+    def hIndex(self, citations: List[int]) -> int:
+        citations.sort()
+        n, i = len(citations), 1
+        while i <= n:
+            if citations[n-i] < i: break
+            i += 1
+        return i-1
+
