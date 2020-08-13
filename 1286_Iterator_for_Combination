@@ -1,0 +1,120 @@
+Leetcode 1286: Iterator for Combination
+Detailed video Explanation: https://youtu.be/LzYlG_p1-zs
+===================================================
+
+C++:
+----
+class CombinationIterator {
+    string s;
+    queue<string> q;
+    
+    void getCombination(int start, int length, string txt){
+        if(length == 0){
+            q.push(txt);
+            return;
+        }
+        
+        for(int i = start; i <= s.length() - length; ++i)
+            getCombination(i+1, length-1, txt + s[i]);
+    }
+public:
+    CombinationIterator(string characters, int combinationLength) {
+        s = characters;
+        string txt = "";
+        getCombination(0, combinationLength, txt);
+    }
+    
+    string next() {
+        string str = q.front();
+        q.pop();
+        return str;
+    }
+    
+    bool hasNext() {
+        return !q.empty();
+    }
+};
+
+/**
+ * Your CombinationIterator object will be instantiated and called as such:
+ * CombinationIterator* obj = new CombinationIterator(characters, combinationLength);
+ * string param_1 = obj->next();
+ * bool param_2 = obj->hasNext();
+ */
+
+
+Java:
+-----
+class CombinationIterator {
+    private String s;
+    Queue<String> q;
+    
+    private void getCombination(int start, int length, StringBuilder txt){
+        if(length == 0){
+            q.add(txt.toString());
+            return;
+        }
+        
+        for(int i = start; i <= s.length() - length; ++i){
+            txt.append(s.charAt(i));
+            getCombination(i+1, length-1, txt);
+            txt.deleteCharAt(txt.length() - 1);
+        }
+    }
+    public CombinationIterator(String characters, int combinationLength) {
+        s = characters;
+        q = new LinkedList();
+        
+        getCombination(0, combinationLength, new StringBuilder());
+    }
+    
+    public String next() {
+        return q.poll();
+    }
+    
+    public boolean hasNext() {
+        return !q.isEmpty();
+    }
+}
+
+/**
+ * Your CombinationIterator object will be instantiated and called as such:
+ * CombinationIterator obj = new CombinationIterator(characters, combinationLength);
+ * String param_1 = obj.next();
+ * boolean param_2 = obj.hasNext();
+ */
+
+
+Python3:
+--------
+class CombinationIterator:
+
+    def __init__(self, characters: str, combinationLength: int):
+        self.q = []
+    
+        def getCombination(start, length, txt):
+            if length == 0:
+                self.q.append(txt)
+                return
+        
+            for i in range(start, len(characters) - length + 1):
+                getCombination(i+1, length-1, txt + characters[i])
+                
+        getCombination(0, combinationLength, "")
+
+    def next(self) -> str:
+        str = self.q[0]
+        self.q.pop(0)
+        return str
+
+    def hasNext(self) -> bool:
+        return len(self.q) > 0
+        
+
+
+# Your CombinationIterator object will be instantiated and called as such:
+# obj = CombinationIterator(characters, combinationLength)
+# param_1 = obj.next()
+# param_2 = obj.hasNext()
+
+
