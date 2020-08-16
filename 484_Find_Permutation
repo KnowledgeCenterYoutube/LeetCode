@@ -1,0 +1,34 @@
+LC 484. Find Permutation
+
+n = length of input string
+Result should contain unique numbers from 1 to n+1.
+Lowest lexicographic permutation that satisfies pattern given by input string.
+D = Decrease
+I = Increase.
+
+Example:
+Input "DDIIDI"
+Output: [3,2,1,4,6,5,7]
+
+-----------------------
+
+C++:
+----
+class Solution {
+public:
+    vector<int> findPermutation(string s) {
+        vector<int> res(s.length() + 1, 0);
+        for(int i = 0; i < res.size(); ++i)
+            res[i] = i+1;
+        
+        int i = 1;
+        while(i <= s.length()){
+            int j = i;
+            while(i <= s.length() && s[i-1] == 'D') ++i;
+            reverse(res.begin() + j-1, res.begin() + i);
+            i++;
+        }
+        return res;
+    }
+};
+
