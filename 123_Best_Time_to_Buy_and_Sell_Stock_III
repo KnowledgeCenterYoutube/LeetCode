@@ -1,0 +1,87 @@
+Leetcode 123: Best Time to Buy and Sell Stock III
+Detailed video Explanation: https://youtu.be/0FKn0FSIQYE
+==================================================
+
+
+C++:
+----
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int n = prices.size();
+        if(n < 2) return 0;
+        
+        int p1 = prices[0], p2 = prices[n-1];
+        vector<int> profit1(n, 0);
+        vector<int> profit2(n, 0);
+        
+        for(int i = 1; i < n; ++i){
+            profit1[i] = max(profit1[i-1], prices[i] - p1);
+            p1 = min(p1, prices[i]);
+            
+            int j = n-1-i;
+            profit2[j] = max(profit2[j+1], p2 - prices[j]);
+            p2 = max(p2, prices[j]);
+        }
+        
+        int profit = 0;
+        for(int i = 0; i < n; ++i)
+            profit = max(profit, profit1[i] + profit2[i]);
+        return profit;
+    }
+};
+
+
+Java:
+----
+class Solution {
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        if(n < 2) return 0;
+        
+        int p1 = prices[0], p2 = prices[n-1];
+        int[] profit1 = new int[n];
+        int[] profit2 = new int[n];
+        
+        for(int i = 1; i < n; ++i){
+            profit1[i] = Math.max(profit1[i-1], prices[i] - p1);
+            p1 = Math.min(p1, prices[i]);
+            
+            int j = n-1-i;
+            profit2[j] = Math.max(profit2[j+1], p2 - prices[j]);
+            p2 = Math.max(p2, prices[j]);
+        }
+        
+        int profit = 0;
+        for(int i = 0; i < n; ++i)
+            profit = Math.max(profit, profit1[i] + profit2[i]);
+        return profit;
+    }
+}
+
+
+Python3:
+-------
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        n = len(prices)
+        if n < 2: return 0
+        
+        p1, p2 = prices[0], prices[n-1]
+        profit1, profit2 = [0]*n, [0]*n
+        
+        for i in range(1, n):
+            profit1[i] = max(profit1[i-1], prices[i] - p1)
+            p1 = min(p1, prices[i])
+            
+            j = n-1-i
+            profit2[j] = max(profit2[j+1], p2 - prices[j])
+            p2 = max(p2, prices[j])
+        
+        profit = 0;
+        for i in range(n):
+            profit = max(profit, profit1[i] + profit2[i])
+        return profit
+
+
+
