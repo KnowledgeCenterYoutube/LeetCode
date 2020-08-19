@@ -1,0 +1,61 @@
+Leetcode 824: Goat Latin
+Detailed video Explanation: https://youtu.be/4EC9U8lvWB8
+======================================================
+
+
+C++:
+----
+class Solution {
+public:
+    string toGoatLatin(string S) {
+        stringstream ss(S);
+        string result, word, suffix;
+        unordered_set<char> vowels = {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'};
+        
+        while(ss >> word){
+            suffix += 'a';
+            if(vowels.find(word[0]) == vowels.end())
+                word = word.substr(1) + word[0];
+            result += word + "ma" + suffix + ' ';
+         }
+        result.pop_back();
+        return result;
+    }
+};
+
+
+Java:
+----
+class Solution {
+    public String toGoatLatin(String S) {
+        StringBuilder sb = new StringBuilder();
+        String suffix = "";
+        Character[] vowelsarr = {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'};
+        Set<Character> vowels = new HashSet(Arrays.asList(vowelsarr));
+        
+        for(String word: S.split(" ")){
+            suffix += 'a';
+            if(!vowels.contains(word.charAt(0)))
+                word = word.substring(1) + word.charAt(0);
+            sb.append(word).append("ma").append(suffix).append(' ');
+        }
+        sb.deleteCharAt(sb.length()-1);
+        return sb.toString();
+    }
+}
+
+
+Python3:
+-------
+class Solution:
+    def toGoatLatin(self, S: str) -> str:
+        vowels = {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'}
+        result, suffix = "", ""
+        for word in S.split():
+            suffix += 'a'
+            if not word[0] in vowels:
+                word = word[1:] + word[0]
+            result += word + "ma" + suffix + ' '
+        return result[:-1]
+        
+        
