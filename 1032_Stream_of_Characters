@@ -1,0 +1,159 @@
+Leetcode 1032: Stream of Characters
+Detailed video explanation: https://youtu.be/Y37WA4advWw
+=================================================
+
+C++:
+----
+class Trie{
+    Trie *children[26];
+    bool endOfWord;
+public:
+    Trie():endOfWord(false){
+        for(int i = 0; i < 26; ++i) children[i] = nullptr;
+    }
+    
+    void insert(string s){
+        Trie *t = this;
+        for(char c: s){
+            if(t->children[c-'a'] == nullptr)
+                t->children[c-'a'] = new Trie();
+            t = t->children[c-'a'];
+        }
+        t->endOfWord = true;
+    }
+    
+    bool search(deque<char>& s){
+        Trie *t = this;
+        for(char c: s){
+            if(t->children[c-'a'] == nullptr) return false;
+            t = t->children[c-'a'];
+            if(t->endOfWord) return true;
+        }
+        return false;
+    }
+};
+
+class StreamChecker {
+    Trie t;
+    deque<char> stream;
+public:
+    StreamChecker(vector<string>& words) {
+        for(string& w: words){
+            reverse(w.begin(), w.end());
+            t.insert(w);
+        }
+    }
+    
+    bool query(char letter) {
+        stream.push_front(letter);
+        return t.search(stream);
+    }
+};
+
+/**
+ * Your StreamChecker object will be instantiated and called as such:
+ * StreamChecker* obj = new StreamChecker(words);
+ * bool param_1 = obj->query(letter);
+ */
+
+
+Java:
+-----
+class StreamChecker {
+    class Trie{
+        public Trie[] children;
+        public boolean endOfWord;
+        public Trie(){
+            endOfWord = false;
+            children = new Trie[26];
+        }
+
+        public void insert(String s){
+            Trie t = this;
+            for(char c: s.toCharArray()){
+                if(t.children[c-'a'] == null)
+                    t.children[c-'a'] = new Trie();
+                t = t.children[c-'a'];
+            }
+            t.endOfWord = true;
+        }
+
+        public boolean search(Deque<Character> s){
+            Trie t = this;
+            for(char c: s){
+                if(t.children[c-'a'] == null) return false;
+                t = t.children[c-'a'];
+                if(t.endOfWord) return true;
+            }
+            return false;
+        }
+    };
+
+    public Trie t = new Trie();
+    public Deque<Character> stream = new LinkedList();
+    
+    public StreamChecker(String[] words) {
+        for(String w: words){
+            String w_rev = new StringBuilder(w).reverse().toString();
+            t.insert(w_rev);
+        }
+    }
+    
+    public boolean query(char letter) {
+        stream.addFirst(letter);
+        return t.search(stream);
+    }
+}
+
+/**
+ * Your StreamChecker object will be instantiated and called as such:
+ * StreamChecker obj = new StreamChecker(words);
+ * boolean param_1 = obj.query(letter);
+ */
+
+
+
+Python3:
+--------
+class Trie:
+    
+    def __init__(self):
+        self.endOfWord = False
+        self.children = [None]*26
+
+    def insert(self, s):
+        t = self
+        for c in s:
+            if t.children[ord(c)-ord('a')] == None:
+                t.children[ord(c)-ord('a')] = Trie()
+            t = t.children[ord(c)-ord('a')]
+        t.endOfWord = True
+
+    def search(self, s):
+        t = self
+        for c in s:
+            if t.children[ord(c)-ord('a')] == None: return False
+            t = t.children[ord(c)-ord('a')]
+            if t.endOfWord: return True
+        return False
+
+
+class StreamChecker:
+
+    def __init__(self, words: List[str]):
+        self.t = Trie()
+        self.stream = collections.deque()
+        for w in words:
+            self.t.insert(reversed(w))
+
+    def query(self, letter: str) -> bool:
+        self.stream.appendleft(letter)
+        return self.t.search(self.stream)
+        
+
+
+# Your StreamChecker object will be instantiated and called as such:
+# obj = StreamChecker(words)
+# param_1 = obj.query(letter)
+
+
