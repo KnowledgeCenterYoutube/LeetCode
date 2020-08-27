@@ -1,0 +1,98 @@
+Leetcode 436: Find Right Interval
+Detailed video explanation: https://youtu.be/VEBbumHmps8
+===============================================
+
+
+C++:
+----
+class Solution {
+    int binary_search(vector<pair<pair<int, int>, int>>& sorted, int x){
+        int n = sorted.size();
+        if(sorted[n-1].first.first < x) return -1;
+        
+        int l = 0, r = n-1;
+        while(l <= r){
+            int mid = l + (r-l)/2;
+            if(sorted[mid].first.first >= x) r = mid-1;
+            else l = mid+1;
+        }
+        return sorted[l].second;
+    }
+public:
+    vector<int> findRightInterval(vector<vector<int>>& intervals) {
+        vector<pair<pair<int, int>, int>> sorted;
+        int n = intervals.size();
+        for(int i = 0; i < n; ++i)
+            sorted.push_back({{intervals[i][0], intervals[i][1]}, i});
+        sort(sorted.begin(), sorted.end());
+        
+        vector<int> result(n, -1);
+        for(int i = 0; i < n; ++i)
+            result[i] = binary_search(sorted, intervals[i][1]);
+        
+        return result;
+    }
+};
+
+
+
+Java:
+-----
+class Solution {
+    private int binary_search(List<Pair<Pair<Integer, Integer>, Integer>> sorted, int x){
+        int n = sorted.size();
+        if(sorted.get(n-1).getKey().getKey() < x) return -1;
+        
+        int l = 0, r = n-1;
+        while(l <= r){
+            int mid = l + (r-l)/2;
+            if(sorted.get(mid).getKey().getKey() >= x) r = mid-1;
+            else l = mid+1;
+        }
+        return sorted.get(l).getValue();
+    }
+    public int[] findRightInterval(int[][] intervals) {
+        List<Pair<Pair<Integer, Integer>, Integer>> sorted = new ArrayList();
+        int n = intervals.length;
+        for(int i = 0; i < n; ++i)
+            sorted.add(new Pair(new Pair(intervals[i][0], intervals[i][1]), i));
+        Collections.sort(sorted, (a,b) -> a.getKey().getKey() - b.getKey().getKey());
+        
+        int[] result = new int[n];
+        for(int i = 0; i < n; ++i)
+            result[i] = binary_search(sorted, intervals[i][1]);
+        
+        return result;
+    }
+}
+
+
+
+Python3:
+-------
+class Solution:
+    def findRightInterval(self, intervals: List[List[int]]) -> List[int]:
+        sorted = []
+        n = len(intervals)
+        for i in range(n):
+            sorted.append([intervals[i], i])
+        sorted.sort()
+        
+        result = [-1]*n
+        
+        def binary_search(x):
+            if sorted[n-1][0][0] < x: return -1;
+
+            l,r = 0, n-1
+            while l <= r:
+                mid = l + (r-l)//2
+                if sorted[mid][0][0] >= x: r = mid-1
+                else: l = mid+1
+            return sorted[l][1]
+        
+        for i in range(n):
+            result[i] = binary_search(intervals[i][1])
+        
+        return result
+
+
