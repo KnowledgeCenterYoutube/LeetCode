@@ -1,0 +1,117 @@
+Leetcode 952: Largest Component Size by Common Factor
+Detailed video explanation: https://youtu.be/DNfNZwilaC4
+======================================================
+
+C++:
+----
+class Solution {
+    int _find (int x, vector<int>& parent){
+        if(parent[x]==-1)
+            return x;
+        parent[x] = _find(parent[x], parent);
+        return parent[x];
+    }
+    
+    void _union(int x, int y, vector<int>& parent){
+        int xp = _find(x, parent);
+        int yp = _find(y, parent);
+        if(xp != yp)
+            parent[yp] = xp;
+    }
+public: 
+    int largestComponentSize(vector<int>& A){
+        vector<int> parent(100001, -1);
+        for(int x:A){
+            for(int i = 2; i <= sqrt(x); ++i){
+                if(x % i == 0){
+                    _union(i, x, parent);
+                    _union(x, x/i, parent);
+                }
+            }
+        }
+        
+        int count = 0;
+        unordered_map<int, int> cache;
+        for(int x:A){
+            int xp = _find(x, parent);
+            count = max(count, 1 + cache[xp]);
+            cache[xp] += 1;
+        }
+        return count;
+    }
+};
+
+
+Java:
+----
+class Solution {
+    int _find (int x, int[] parent){
+        if(parent[x]==-1)
+            return x;
+        parent[x] = _find(parent[x], parent);
+        return parent[x];
+    }
+    
+    void _union(int x, int y, int[] parent){
+        int xp = _find(x, parent);
+        int yp = _find(y, parent);
+        if(xp != yp)
+            parent[yp] = xp;
+    }
+    public int largestComponentSize(int[] A) {
+        int[] parent = new int[100001];
+        for(int i = 0; i < 100001; ++i) parent[i] = -1;
+        
+        for(int x:A){
+            for(int i = 2; i <= Math.sqrt(x); ++i){
+                if(x % i == 0){
+                    _union(i, x, parent);
+                    _union(x, x/i, parent);
+                }
+            }
+        }
+        
+        int count = 0;
+        Map<Integer, Integer> cache = new HashMap();
+        for(int x:A){
+            int xp = _find(x, parent);
+            count = Math.max(count, 1 + cache.getOrDefault(xp, 0));
+            cache.put(xp, 1 + cache.getOrDefault(xp, 0));
+        }
+        return count;
+    }
+}
+
+
+Python3:
+--------
+class Solution:
+    def largestComponentSize(self, A: List[int]) -> int:
+        parent = [-1]*100001
+        def _find (x):
+            if parent[x] == -1:
+                return x
+            parent[x] = _find(parent[x])
+            return parent[x]
+
+        def _union(x, y):
+            xp = _find(x)
+            yp = _find(y)
+            if xp != yp:
+                parent[yp] = xp
+        for x in A:
+            for i in range(2, int(sqrt(x)) + 1):
+                if x % i == 0:
+                    _union(i, x)
+                    _union(x, x//i)
+        
+        count = 0;
+        cache = {}
+        for x in A:
+            xp = _find(x)
+            count = max(count, 1 + cache.get(xp, 0))
+            cache[xp] = 1 + cache.get(xp, 0)
+        return count
+    
+    # O(N * sqrt*max(A[i]))
+
