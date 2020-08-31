@@ -1,0 +1,132 @@
+Leetcode 450: Delete Node in a BST
+Detailed video explanation: https://youtu.be/LyHK6_I3aUY
+===============================================
+
+C++:
+----
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+    int inorder_predecessor(TreeNode* root){
+        root = root->left;
+        while(root->right) root = root->right;
+        return root->val;
+    }
+    int inorder_successor(TreeNode* root){
+        root = root->right;
+        while(root->left) root = root->left;
+        return root->val;
+    }
+public:
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        if(!root) return root;
+        if(key > root->val) root->right = deleteNode(root->right, key);
+        else if(key < root->val) root->left = deleteNode(root->left, key);
+        else{
+            if(!root->left && !root->right) root = nullptr;
+            else if(root->left){ // find inorder predecessor
+                root->val = inorder_predecessor(root);
+                root->left = deleteNode(root->left, root->val);
+            }
+            else { // find inorder successor
+                root->val = inorder_successor(root);
+                root->right = deleteNode(root->right, root->val);
+            }
+        }
+        return root;
+    }
+};
+
+
+
+Java:
+-----
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    private int inorder_predecessor(TreeNode root){
+        root = root.left;
+        while(root.right != null) root = root.right;
+        return root.val;
+    }
+    private int inorder_successor(TreeNode root){
+        root = root.right;
+        while(root.left != null) root = root.left;
+        return root.val;
+    }
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if(root == null) return root;
+        if(key > root.val) root.right = deleteNode(root.right, key);
+        else if(key < root.val) root.left = deleteNode(root.left, key);
+        else{
+            if(root.left == null && root.right == null) root = null;
+            else if(root.left != null){ // find inorder predecessor
+                root.val = inorder_predecessor(root);
+                root.left = deleteNode(root.left, root.val);
+            }
+            else { // find inorder successor
+                root.val = inorder_successor(root);
+                root.right = deleteNode(root.right, root.val);
+            }
+        }
+        return root;
+    }
+}
+
+
+
+Python3:
+--------
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def deleteNode(self, root: TreeNode, key: int) -> TreeNode:
+        if root == None: return root
+    
+        def inorder_predecessor(root):
+            root = root.left
+            while root.right != None: root = root.right
+            return root.val
+        
+        def inorder_successor(root):
+            root = root.right
+            while root.left != None: root = root.left
+            return root.val
+        
+        if key > root.val: root.right = self.deleteNode(root.right, key)
+        elif key < root.val: root.left = self.deleteNode(root.left, key)
+        else:
+            if root.left == None and root.right == None: root = None
+            elif root.left != None: # find inorder predecessor
+                root.val = inorder_predecessor(root)
+                root.left = self.deleteNode(root.left, root.val)
+            else: # find inorder successor
+                root.val = inorder_successor(root)
+                root.right = self.deleteNode(root.right, root.val)
+        return root
