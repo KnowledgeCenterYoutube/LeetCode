@@ -1,0 +1,66 @@
+Leetcode 949: Largest Time for Given Digits
+Detailed video explanation: https://youtu.be/sn6r0ZV_2y4
+==============================================
+
+
+C++:
+----
+class Solution {
+public:
+    string largestTimeFromDigits(vector<int>& A) {
+        string result;
+        for(int i = 0; i < 4; ++i){
+            for(int j = 0; j < 4; ++j){
+                for(int k = 0; k < 4; ++k){
+                    if(i == j || j == k || k == i) continue;
+                    string hh = to_string(A[i]) + to_string(A[j]);
+                    string mm = to_string(A[k]) + to_string(A[6-i-j-k]);
+                    string _time = hh + ":" + mm;
+                    if(hh < "24" && mm < "60" && _time > result) result = _time;
+                }
+            }
+        }
+        return result;
+    }
+};
+
+
+
+Java:
+-----
+class Solution {
+    public String largestTimeFromDigits(int[] A) {
+        String result = "";
+        for(int i = 0; i < 4; ++i){
+            for(int j = 0; j < 4; ++j){
+                for(int k = 0; k < 4; ++k){
+                    if(i == j || j == k || k == i) continue;
+                    String hh = A[i] + "" + A[j];
+                    String mm = A[k] + "" + A[6-i-j-k];
+                    String _time = hh + ":" + mm;
+                    if(hh.compareTo("24") < 0 && mm.compareTo("60") < 0 && _time.compareTo(result) > 0) result = _time;
+                }
+            }
+        }
+        return result;
+    }
+}
+
+
+
+Python3:
+-------
+class Solution:
+    def largestTimeFromDigits(self, A: List[int]) -> str:
+        result = ""
+        for i in range(4):
+            for j in range(4):
+                for k in range(4):
+                    if i == j or j == k or k == i: continue
+                    hh = str(A[i]) + str(A[j])
+                    mm = str(A[k]) + str(A[6-i-j-k])
+                    _time = hh + ":" + mm
+                    if hh < "24" and mm < "60" and _time > result: result = _time
+        return result
+
+
