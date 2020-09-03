@@ -1,0 +1,39 @@
+Leetcode 220: Contains Duplicate III
+Detailed video Explanation:https://youtu.be/jRKEp4IYY3E
+================================================
+
+
+C++:
+----
+class Solution {
+public:
+    bool containsNearbyAlmostDuplicate(vector<int>& nums, int k, int t) {
+        int n = nums.size();
+        set<int> ss(nums.begin(), nums.end());
+        if( t == 0 && n == ss.size()) return false;
+            
+        for(int i = 0; i < n; ++i){
+            for(int j = i+1; j < i+1+k; ++j){
+                if(j >= n) break;
+                if(abs((long long)nums[i] - nums[j]) <= t) return true;
+            }
+        }
+        return false;
+    }
+};
+
+
+Python3:
+-------
+class Solution:
+    def containsNearbyAlmostDuplicate(self, nums: List[int], k: int, t: int) -> bool:
+        n = len(nums)
+        if t == 0 and n == len(set(nums)): return False
+           
+        for i in range(n):
+            for j in range(i+1, i+1+k):
+                if j >= n: break
+                if abs(nums[i] - nums[j]) <= t: return True
+        return False
+        
+        
