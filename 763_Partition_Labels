@@ -1,0 +1,71 @@
+Leetcode 763: Partition Labels
+Detailed video explanation: https://youtu.be/kS4P0vXbGmc
+============================================
+
+
+C++:
+----
+class Solution {
+public:
+    vector<int> partitionLabels(string S) {
+        vector<int> end_idx(26, 0);
+        for(int i = 0; i < S.length(); ++i)
+            end_idx[S[i] - 'a'] = i;
+        
+        vector<int> result;
+        int start = 0, end = 0;
+        for(int i = 0; i < S.length(); ++i){
+            end = max(end, end_idx[S[i] - 'a']);
+            if(i == end){ // all the characters of current partition included
+                result.push_back(i - start + 1);
+                start = i + 1;
+            }
+        }
+        return result;
+    }
+};
+
+
+
+Java:
+-----
+class Solution {
+    public List<Integer> partitionLabels(String S) {
+        int[] end_idx = new int[26];
+        for(int i = 0; i < S.length(); ++i)
+            end_idx[S.charAt(i) - 'a'] = i;
+        
+        List<Integer> result = new ArrayList();
+        int start = 0, end = 0;
+        for(int i = 0; i < S.length(); ++i){
+            end = Math.max(end, end_idx[S.charAt(i) - 'a']);
+            if(i == end){ // all the characters of current partition included
+                result.add(i - start + 1);
+                start = i + 1;
+            }
+        }
+        return result;
+    }
+}
+
+
+
+
+Python3:
+-------
+class Solution:
+    def partitionLabels(self, S: str) -> List[int]:
+        end_idx = [0]*26
+        for i in range(len(S)):
+            end_idx[ord(S[i]) - ord('a')] = i
+        
+        result = []
+        start, end = 0, 0
+        for i in range(len(S)):
+            end = max(end, end_idx[ord(S[i]) - ord('a')]);
+            if i == end: # all the characters of current partition included
+                result.append(i - start + 1)
+                start = i + 1
+        return result
+
+
