@@ -1,0 +1,50 @@
+Leetcode 1572: Matrix Diagonal Sum
+Detailed video explanation: https://youtu.be/5yF2HkQXuSo
+=============================================
+
+
+C++:
+----
+class Solution {
+public:
+    int diagonalSum(vector<vector<int>>& mat) {
+        int n = mat.size();
+        int sum = 0;
+        for(int i = 0; i < n; ++i)
+            sum += mat[i][i] + mat[i][n-i-1];
+        if(n % 2) sum -= mat[n/2][n/2];
+        
+        return sum;
+    }
+};
+
+
+
+Java:
+-----
+class Solution {
+    public int diagonalSum(int[][] mat) {
+        int n = mat.length;
+        int sum = 0;
+        for(int i = 0; i < n; ++i)
+            sum += mat[i][i] + mat[i][n-i-1];
+        if(n % 2 == 1) sum -= mat[n/2][n/2];
+        
+        return sum;
+    }
+}
+
+
+
+
+Python3:
+-------
+class Solution:
+    def diagonalSum(self, mat: List[List[int]]) -> int:
+        n, sum = len(mat), 0
+        for i in range(n):
+            sum += mat[i][i] + mat[i][n-i-1]
+        if n % 2 == 1: sum -= mat[n//2][n//2]
+        
+        return sum
+
