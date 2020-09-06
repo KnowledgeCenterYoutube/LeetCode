@@ -1,0 +1,72 @@
+Leetcode 835: Image Overlap
+Detailed video Explanation: https://youtu.be/zfjBapE3Y6E
+=============================================
+
+
+C++:
+----
+class Solution {
+    int shift_count(vector<vector<int>>& A, vector<vector<int>>& B){
+        int n = A.size(), count = 0;
+        for(int x = 0; x < n; ++x){
+            for(int y = 0; y < n; ++y){
+                int temp = 0;
+                for(int i = y; i < n; ++i){
+                    for(int j = x; j < n; ++j)
+                        if(A[i][j] == 1 && B[i-y][j-x] == 1) temp++;
+                }
+                count = max(count, temp);
+            }
+        }
+        return count;
+    }
+public:
+    int largestOverlap(vector<vector<int>>& A, vector<vector<int>>& B) {
+        return max(shift_count(A, B), shift_count(B, A));
+    }
+};
+
+
+
+Java:
+-----
+class Solution {
+    private int shift_count(int[][] A, int[][] B){
+        int n = A.length, count = 0;
+        for(int x = 0; x < n; ++x){
+            for(int y = 0; y < n; ++y){
+                int temp = 0;
+                for(int i = y; i < n; ++i){
+                    for(int j = x; j < n; ++j)
+                        if(A[i][j] == 1 && B[i-y][j-x] == 1) temp++;
+                }
+                count = Math.max(count, temp);
+            }
+        }
+        return count;
+    }
+    public int largestOverlap(int[][] A, int[][] B) {
+        return Math.max(shift_count(A, B), shift_count(B, A));
+    }
+}
+
+
+
+Python3:
+-------
+class Solution:
+    def largestOverlap(self, A: List[List[int]], B: List[List[int]]) -> int:
+        def shift_count(AA, BB):
+            n, count = len(AA), 0
+            for x in range(n):
+                for y in range(n):
+                    temp = 0
+                    for i in range(y, n):
+                        for j in range(x, n):
+                            if AA[i][j] == 1 and BB[i-y][j-x] == 1: temp += 1
+                    count = max(count, temp)
+            return count
+        
+        return max(shift_count(A, B), shift_count(B, A))
+
+
