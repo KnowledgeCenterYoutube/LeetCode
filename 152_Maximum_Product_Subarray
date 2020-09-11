@@ -1,0 +1,61 @@
+Leetcode 152: Maximum Product Subarray
+Detailed video Explanation: https://youtu.be/hJ_Uy2DzE08
+=========================================
+
+
+C++:
+----
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int max_overall = nums[0];
+        int max_ending_here = nums[0], min_ending_here = nums[0];
+        
+        for(int i = 1; i < nums.size(); ++i){
+            int tmp = max_ending_here;
+            max_ending_here = max({nums[i], nums[i]*max_ending_here, nums[i]*min_ending_here});
+            min_ending_here = min({nums[i], nums[i]*tmp, nums[i]*min_ending_here});
+            max_overall = max(max_overall, max_ending_here);
+        }
+        return max_overall;
+    }
+};
+
+
+
+Java:
+-----
+class Solution {
+    public int maxProduct(int[] nums) {
+        int max_overall = nums[0];
+        int max_ending_here = nums[0], min_ending_here = nums[0];
+        
+        for(int i = 1; i < nums.length; ++i){
+            int tmp = max_ending_here;
+            max_ending_here = Math.max(nums[i], Math.max(nums[i]*max_ending_here, nums[i]*min_ending_here));
+            min_ending_here = Math.min(nums[i], Math.min(nums[i]*tmp, nums[i]*min_ending_here));
+            max_overall = Math.max(max_overall, max_ending_here);
+        }
+        return max_overall;
+    }
+}
+
+
+
+
+Python3:
+-------
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        max_overall = nums[0]
+        max_ending_here, min_ending_here = nums[0], nums[0]
+        
+        for i in range(1, len(nums)):
+            tmp = max_ending_here
+            max_ending_here = max({nums[i], nums[i]*max_ending_here, nums[i]*min_ending_here})
+            min_ending_here = min({nums[i], nums[i]*tmp, nums[i]*min_ending_here})
+            max_overall = max(max_overall, max_ending_here)
+        
+        return max_overall
+
+
