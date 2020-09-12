@@ -1,0 +1,71 @@
+Leetcode 216: Combination Sum III
+Detailed video explanation: https://youtu.be/rP_K3WJnRR4
+=================================
+
+
+C++:
+----
+class Solution {
+    vector<vector<int>> result;
+    void try_combination(vector<int>& combination, int k, int n, int start){
+        if(k == combination.size()){
+            if(n == 0) result.push_back(combination);
+            return;
+        }
+        for(int i = start; i <= 9; ++i){
+            combination.push_back(i);
+            try_combination(combination, k, n-i, i+1);
+            combination.pop_back();
+        }
+    }
+public:
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<int> combination;
+        try_combination(combination, k, n, 1);
+        return result;
+    }
+};
+
+
+
+Java:
+-----
+class Solution {
+    List<List<Integer>> result = new ArrayList();
+    void try_combination(List<Integer> combination, int k, int n, int start){
+        if(k == combination.size()){
+            if(n == 0) result.add(new ArrayList<Integer>(combination));
+            return;
+        }
+        for(int i = start; i <= 9; ++i){
+            combination.add(i);
+            try_combination(combination, k, n-i, i+1);
+            combination.remove(combination.size() - 1);
+        }
+    }
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<Integer> combination = new ArrayList();
+        try_combination(combination, k, n, 1);
+        return result;
+    }
+}
+
+
+
+Python3:
+-------
+class Solution:
+    def combinationSum3(self, k: int, n: int) -> List[List[int]]:
+        result = []
+        def try_combination(combination, n, start):
+            if k == len(combination):
+                if n == 0: result.append(combination.copy())
+                return
+            for i in range(start, 10):
+                combination.append(i)
+                try_combination(combination, n-i, i+1)
+                combination.pop()
+        try_combination([], n, 1)
+        return result
+
+
