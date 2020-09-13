@@ -1,0 +1,75 @@
+Leetcode 57: Insert Interval
+Detailed video Explanation: https://youtu.be/FuLfL_WhUHI
+==============================================
+
+
+C++:
+----
+class Solution {
+public:
+    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+        vector<vector<int>> result;
+        int i = 0, n = intervals.size();
+        while(i < n && intervals[i][1] < newInterval[0]) result.push_back(intervals[i++]);
+        
+        vector<int> mI = newInterval;
+        while(i < n && intervals[i][0] <= newInterval[1]){
+            mI[0] = min(mI[0], intervals[i][0]);
+            mI[1] = max(mI[1], intervals[i++][1]);
+        }
+        result.push_back(mI);
+        
+        while(i < n) result.push_back(intervals[i++]);
+        
+        return result;
+    }
+};
+
+
+
+Java:
+-----
+class Solution {
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        List<int[]> result = new ArrayList();
+        int i = 0, n = intervals.length;
+        while(i < n && intervals[i][1] < newInterval[0]) result.add(intervals[i++]);
+        
+        int[] mI = newInterval;
+        while(i < n && intervals[i][0] <= newInterval[1]){
+            mI[0] = Math.min(mI[0], intervals[i][0]);
+            mI[1] = Math.max(mI[1], intervals[i++][1]);
+        }
+        result.add(mI);
+        
+        while(i < n) result.add(intervals[i++]);
+        
+        return result.toArray(new int[result.size()][2]);
+    }
+}
+
+
+
+Python3:
+--------
+class Solution:
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        result = []
+        i, n = 0, len(intervals)
+        while i < n and intervals[i][1] < newInterval[0]:
+            result.append(intervals[i])
+            i += 1
+        
+        mI = newInterval;
+        while i < n and intervals[i][0] <= newInterval[1]:
+            mI[0] = min(mI[0], intervals[i][0])
+            mI[1] = max(mI[1], intervals[i][1])
+            i += 1
+        
+        result.append(mI)
+        
+        while i < n:
+            result.append(intervals[i])
+            i += 1
+        
+        return result
