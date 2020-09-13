@@ -2,6 +2,6 @@
 
 ## Solutions to LeetCode Problems
 
-LeetCode Problems and Solutions playlist on youtube: https://www.youtube.com/playlist?list=PL1w8k37X_6L86f3PUUVFoGYXvZiZHde1S
+[LeetCode Problems and Solutions](https://www.youtube.com/playlist?list=PL1w8k37X_6L86f3PUUVFoGYXvZiZHde1S) playlist on youtube.
 
-### Knowledge Center channel: https://www.youtube.com/c/KnowledgeCenter
+### Visit [Knowledge Center] (https://www.youtube.com/c/KnowledgeCenter) channel on Youtube.
