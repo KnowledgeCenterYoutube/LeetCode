@@ -1,0 +1,59 @@
+Leetcode 198: House Robber
+Detailed video explanation: https://youtu.be/jzpsHKJy00c
+=========================================
+
+
+C++:
+----
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        int n = nums.size();
+        if(n == 0) return 0;
+        if(n == 1) return nums[0];
+        int v1 = nums[0], v2 = max(v1, nums[1]);
+        for(int i = 2; i < n; ++i){
+            int tmp = v2;
+            v2 = max(v2, v1 + nums[i]);
+            v1 = tmp;
+        }
+        return v2;
+    }
+};
+
+
+
+Java:
+----
+class Solution {
+    public int rob(int[] nums) {
+        int n = nums.length;
+        if(n == 0) return 0;
+        if(n == 1) return nums[0];
+        int v1 = nums[0], v2 = Math.max(v1, nums[1]);
+        for(int i = 2; i < n; ++i){
+            int tmp = v2;
+            v2 = Math.max(v2, v1 + nums[i]);
+            v1 = tmp;
+        }
+        return v2;
+    }
+}
+
+
+
+Python3:
+-------
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        n = len(nums)
+        if n == 0: return 0
+        if n == 1: return nums[0]
+        v1, v2 = nums[0], max(nums[0], nums[1])
+        for i in range(2, n):
+            tmp = v2;
+            v2 = max(v2, v1 + nums[i])
+            v1 = tmp
+        return v2
+
+
