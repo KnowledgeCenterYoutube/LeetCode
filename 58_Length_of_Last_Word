@@ -1,0 +1,55 @@
+Leetcode 58: Length of Last Word
+Detailed video explanation: https://youtu.be/E8r1N8wNR0A
+================================================
+
+
+C++:
+----
+class Solution {
+public:
+    int lengthOfLastWord(string s) {
+        /*
+        stringstream ss(s);
+        string word;
+        while(ss >> word){}
+        return word.length();
+        */
+        int n = s.length(), result = 0;
+        while(n > 0){
+            if(s[--n] != ' ') result++;
+            else if(result > 0) return result;
+        }
+        return result;
+    }
+};
+
+
+
+Java:
+----
+class Solution {
+    public int lengthOfLastWord(String s) {
+        int n = s.length(), result = 0;
+        while(n > 0){
+            if(s.charAt(--n) != ' ') result++;
+            else if(result > 0) return result;
+        }
+        return result;
+    }
+}
+
+
+
+
+Python3:
+-------
+class Solution:
+    def lengthOfLastWord(self, s: str) -> int:
+        n, result = len(s), 0
+        while n > 0:
+            n -= 1
+            if s[n] != ' ': result += 1
+            elif result > 0: return result
+        return result
+
+
