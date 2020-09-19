@@ -1,0 +1,63 @@
+Leetcode 1291: Sequential Digits
+Detailed video explanation: https://youtu.be/sFt3KVGyeWw
+===========================================
+
+
+C++:
+----
+class Solution {
+public:
+    vector<int> sequentialDigits(int low, int high) {
+        string digits = "123456789";
+        vector<int> result;
+        int nl = to_string(low).length();
+        int nh = to_string(high).length();
+        
+        for(int i = nl; i <= nh; ++i){
+            for(int j = 0; j < 10-i; ++j){
+                int num = stoi(digits.substr(j, i));
+                if(num >= low && num <= high) result.push_back(num);
+            }
+        }
+        return result;
+    }
+};
+
+
+
+Java:
+-----
+class Solution {
+    public List<Integer> sequentialDigits(int low, int high) {
+        String digits = "123456789";
+        List<Integer> result = new ArrayList();
+        int nl = String.valueOf(low).length();
+        int nh = String.valueOf(high).length();
+        
+        for(int i = nl; i <= nh; ++i){
+            for(int j = 0; j < 10-i; ++j){
+                int num = Integer.parseInt(digits.substring(j, j+i));
+                if(num >= low && num <= high) result.add(num);
+            }
+        }
+        return result;
+    }
+}
+
+
+
+
+Python3:
+--------
+class Solution:
+    def sequentialDigits(self, low: int, high: int) -> List[int]:
+        digits = "123456789"
+        result = []
+        nl, nh = len(str(low)), len(str(high))
+        
+        for i in range(nl, nh+1):
+            for j in range(0, 10-i):
+                num = int(digits[j: j+i])
+                if num >= low and num <= high: result.append(num)
+        return result
+
