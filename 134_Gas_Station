@@ -1,0 +1,69 @@
+Leetcode 134: Gas Station
+Detailed video Explanation: https://youtu.be/xmJZSYSvgfE
+========================================
+
+
+C++:
+----
+class Solution {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+        int n = gas.size();
+        int total_surplus = 0;
+        int surplus = 0;
+        int S = 0;
+        
+        for(int i = 0; i < n; ++i){
+            total_surplus += gas[i] - cost[i];
+            surplus += gas[i] - cost[i];
+            if(surplus < 0){
+                surplus = 0;
+                S = i+1;
+            }
+        }
+        return (total_surplus < 0) ? -1 : S;
+    }
+};
+
+
+
+
+Java:
+-----
+class Solution {
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int n = gas.length;
+        int total_surplus = 0;
+        int surplus = 0;
+        int S = 0;
+        
+        for(int i = 0; i < n; ++i){
+            total_surplus += gas[i] - cost[i];
+            surplus += gas[i] - cost[i];
+            if(surplus < 0){
+                surplus = 0;
+                S = i+1;
+            }
+        }
+        return (total_surplus < 0) ? -1 : S;
+    }
+}
+
+
+
+
+Python3:
+--------
+class Solution:
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        n, total_surplus, surplus, S = len(gas), 0, 0, 0
+        
+        for i in range(n):
+            total_surplus += gas[i] - cost[i]
+            surplus += gas[i] - cost[i]
+            if surplus < 0:
+                surplus = 0
+                S = i+1
+        return -1 if (total_surplus < 0) else S
+
+
