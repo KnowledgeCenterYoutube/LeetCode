@@ -1,0 +1,39 @@
+Leetcode 389: Find the Difference
+Detailed video explanation: https://youtu.be/sRwElQ_TOr8
+==============================================
+
+
+C++:
+----
+class Solution {
+public:
+    char findTheDifference(string s, string t) {
+        char c = 0;
+        for(char cs: s) c ^= cs;
+        for(char ct: t) c ^= ct;
+        return c;
+    }
+};
+
+
+Java:
+-----
+class Solution {
+    public char findTheDifference(String s, String t) {
+        char c = 0;
+        for(char cs: s.toCharArray()) c ^= cs;
+        for(char ct: t.toCharArray()) c ^= ct;
+        return c;
+    }
+}
+
+
+Python3:
+--------
+class Solution:
+    def findTheDifference(self, s: str, t: str) -> str:
+        c = 0
+        for cs in s: c ^= ord(cs)
+        for ct in t: c ^= ord(ct)
+        return chr(c)
+
