@@ -1,0 +1,62 @@
+Leetocde 189: Rotate Array
+Detailed video Explanation: https://youtu.be/5D9OrHsw3M0
+========================================================
+
+
+C++:
+----
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        int n = nums.size();
+        k %= n;
+        reverse(nums.begin(), nums.begin()+n-k);
+        reverse(nums.begin() + n - k, nums.end());
+        reverse(nums.begin(), nums.end());
+    }
+};
+
+
+
+Java:
+-----
+class Solution {
+    public void reverse(int[] nums, int l, int r){
+        while(l < r){
+            int temp = nums[l];
+            nums[l] = nums[r];
+            nums[r] = temp;
+            l++;
+            r--;
+        }
+    }
+    public void rotate(int[] nums, int k) {
+        int n = nums.length;
+        k %= n;
+        reverse(nums, 0, n-k-1);
+        reverse(nums, n - k, n - 1);
+        reverse(nums, 0, n-1);
+    }
+}
+
+
+
+Python3:
+--------
+class Solution:
+    def reverse(self, nums, l, r):
+        while l < r:
+            nums[l], nums[r] = nums[r], nums[l]
+            l += 1
+            r -= 1
+            
+    def rotate(self, nums: List[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        n = len(nums)
+        k %= n
+        self.reverse(nums, 0, n-k-1)
+        self.reverse(nums, n - k, n - 1)
+        self.reverse(nums, 0, n-1)
+
