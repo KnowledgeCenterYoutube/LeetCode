@@ -1,0 +1,62 @@
+Leetcode 228: Summary Ranges
+Detailed video explanation: https://youtu.be/AjE4x3Yh9xc
+========================================================
+
+
+C++:
+----
+class Solution {
+public:
+    vector<string> summaryRanges(vector<int>& nums) {
+        vector<string> result;
+        int n = nums.size();
+        if(n == 0) return result;
+        int a = nums[0];
+        for(int i = 0; i < n; ++i){
+            if(i == n-1 || nums[i]+1 != nums[i+1]){
+                if(nums[i] != a) result.push_back(to_string(a) + "->" + to_string(nums[i]));
+                else result.push_back(to_string(a));
+                if(i != n-1) a = nums[i+1];
+            }
+        }
+        return result;
+    }
+};
+
+
+
+Java:
+-----
+class Solution {
+    public List<String> summaryRanges(int[] nums) {
+        List<String> result = new ArrayList();
+        int n = nums.length;
+        if(n == 0) return result;
+        int a = nums[0];
+        for(int i = 0; i < n; ++i){
+            if(i == n-1 || nums[i]+1 != nums[i+1]){
+                if(nums[i] != a) result.add(a + "->" + nums[i]);
+                else result.add(a + "");
+                if(i != n-1) a = nums[i+1];
+            }
+        }
+        return result;
+    }
+}
+
+
+
+Python3:
+-------
+class Solution:
+    def summaryRanges(self, nums: List[int]) -> List[str]:
+        result, n = [], len(nums)
+        if n == 0: return result
+        a = nums[0]
+        for i in range(n):
+            if i == n-1 or nums[i]+1 != nums[i+1]:
+                if nums[i] != a: result.append(str(a) + "->" + str(nums[i]))
+                else: result.append(str(a))
+                if i != n-1: a = nums[i+1]
+        
+        return result
