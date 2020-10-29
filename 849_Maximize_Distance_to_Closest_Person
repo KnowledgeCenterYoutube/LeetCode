@@ -1,0 +1,74 @@
+Leetcode 849: Maximize Distance to Closest Person
+Detailed video explanation: https://youtu.be/JtpGVqbiegQ
+==================================================
+
+
+C++:
+----
+class Solution {
+public:
+    int maxDistToClosest(vector<int>& seats) {
+        int n = seats.size();
+        int empty = 0;
+        int result = 0;
+        int idx1 = -1, idx2 = -1;
+        
+        for(int i = 0; i < n; ++i){
+            if(seats[i] == 1){
+                empty = 0;
+                if(idx1 == -1) idx1 = i;
+                idx2 = i;
+            } else {
+                empty++;
+                result = max(result, (empty+1)/2);
+            }
+        }
+        result = max({result, idx1, n-1-idx2});
+        return result;
+    }
+};
+
+
+Java:
+-----
+class Solution {
+    public int maxDistToClosest(int[] seats) {
+        int n = seats.length;
+        int empty = 0;
+        int result = 0;
+        int idx1 = -1, idx2 = -1;
+        
+        for(int i = 0; i < n; ++i){
+            if(seats[i] == 1){
+                empty = 0;
+                if(idx1 == -1) idx1 = i;
+                idx2 = i;
+            } else {
+                empty++;
+                result = Math.max(result, (empty+1)/2);
+            }
+        }
+        result = Math.max(result, Math.max(idx1, n-1-idx2));
+        return result;
+    }
+}
+
+
+Python3:
+-------
+class Solution:
+    def maxDistToClosest(self, seats: List[int]) -> int:
+        n = len(seats)
+        empty, result, idx1, idx2 = 0, 0, -1, -1
+        
+        for i in range(n):
+            if seats[i] == 1:
+                empty = 0
+                if idx1 == -1: idx1 = i
+                idx2 = i
+            else:
+                empty += 1
+                result = max(result, (empty+1)//2)
+        result = max(result, idx1, n-1-idx2)
+        return result
+
