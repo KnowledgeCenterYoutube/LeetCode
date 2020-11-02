@@ -1,0 +1,73 @@
+Leetcode 1290: Convert Binary Number in a Linked List to Integer
+Detailed video explanation: https://youtu.be/CyxbuJwA-0g
+==========================================================
+
+
+C++:
+----
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    int getDecimalValue(ListNode* head) {
+        int result = head->val;
+        while(head->next){
+            result = result*2 + head->next->val;
+            head = head->next;;
+        }
+        return result;
+    }
+};
+
+
+
+Java:
+-----
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public int getDecimalValue(ListNode head) {
+        int result = head.val;
+        while(head.next != null){
+            result = result*2 + head.next.val;
+            head = head.next;;
+        }
+        return result;
+    }
+}
+
+
+
+Python3:
+--------
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def getDecimalValue(self, head: ListNode) -> int:
+        result = head.val
+        while head.next != None:
+            result = result*2 + head.next.val
+            head = head.next
+        
+        return result
+
+
