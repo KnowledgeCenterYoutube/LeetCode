@@ -1,0 +1,106 @@
+Leetcode 147: Insertion Sort List
+Detailed video explanation: https://youtu.be/CPAWcc78IB4
+=====================================
+
+
+C++:
+----
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* insertionSortList(ListNode* head) {
+        ListNode *start = new ListNode();
+        start->next = head;
+        ListNode *curr = head, *prev = start;
+        while(curr){
+            if(curr->next && (curr->next->val < curr->val)){
+                // Insertion 
+                while(prev->next && (prev->next->val < curr->next->val))
+                    prev = prev->next;
+                ListNode *temp = prev->next;
+                prev->next = curr->next;
+                curr->next = curr->next->next;
+                prev->next->next = temp;
+                prev = start;
+            } else
+                curr = curr->next;
+        }
+        return start->next;
+    }
+};
+
+
+
+Java:
+----
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode insertionSortList(ListNode head) {
+        ListNode start = new ListNode();
+        start.next = head;
+        ListNode curr = head, prev = start;
+        while(curr != null){
+            if(curr.next != null && (curr.next.val < curr.val)){
+                // Insertion 
+                while(prev.next != null && (prev.next.val < curr.next.val))
+                    prev = prev.next;
+                ListNode temp = prev.next;
+                prev.next = curr.next;
+                curr.next = curr.next.next;
+                prev.next.next = temp;
+                prev = start;
+            } else
+                curr = curr.next;
+        }
+        return start.next;
+    }
+}
+
+
+
+Python3:
+--------
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def insertionSortList(self, head: ListNode) -> ListNode:
+        start = ListNode()
+        start.next = head
+        curr, prev = head, start
+        while curr != None:
+            if curr.next != None and (curr.next.val < curr.val):
+                # Insertion 
+                while prev.next != None and (prev.next.val < curr.next.val):
+                    prev = prev.next
+                temp = prev.next
+                prev.next = curr.next
+                curr.next = curr.next.next
+                prev.next.next = temp
+                prev = start
+            else:
+                curr = curr.next
+        
+        return start.next
+
+
