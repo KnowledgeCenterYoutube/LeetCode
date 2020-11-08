@@ -1,0 +1,56 @@
+Leetcode 1283: Find the Smallest Divisor Given a Threshold
+Detailed video explanation: https://youtu.be/6b_YFPOYJEk
+===========================================================
+
+
+C++:
+----
+class Solution {
+    long compute_sum(vector<int>& nums, int x){
+        long sum = 0;
+        for(int n: nums) 
+            sum += n/x + (n%x == 0?0:1);
+        return sum;
+    }
+public:
+    int smallestDivisor(vector<int>& nums, int threshold) {
+        int end = 2;
+        while(compute_sum(nums, end) > threshold) end <<= 1;
+        
+        int start = end >> 1;
+        while(start < end){
+            int mid = start + (end-start)/2;
+            if(compute_sum(nums, mid) > threshold) start = mid+1;
+            else end = mid;
+        }
+        return start;
+    }
+};
+
+
+
+Java:
+-----
+class Solution {
+    private long compute_sum(int[] nums, int x){
+        long sum = 0;
+        for(int n: nums) 
+            sum += n/x + (n%x == 0?0:1);
+        return sum;
+    }
+    
+    public int smallestDivisor(int[] nums, int threshold) {
+        int end = 2;
+        while(compute_sum(nums, end) > threshold) end <<= 1;
+        
+        int start = end >> 1;
+        while(start < end){
+            int mid = start + (end-start)/2;
+            if(compute_sum(nums, mid) > threshold) start = mid+1;
+            else end = mid;
+        }
+        return start;
+    }
+}
+
+
