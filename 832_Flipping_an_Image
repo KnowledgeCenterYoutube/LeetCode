@@ -1,0 +1,52 @@
+Leetcode 832: Flipping an Image
+Detailed video explanation: https://youtu.be/sEpxwhzSIis
+===============================================
+
+C++:
+---
+class Solution {
+public:
+    vector<vector<int>> flipAndInvertImage(vector<vector<int>>& A) {
+        int c = A[0].size();
+        for(auto& row: A){
+            for(int i = 0; i < (c+1)/2; ++i){
+                int tmp = row[i];
+                row[i] = 1 - row[c-1-i];
+                row[c-1-i] = 1 - tmp;
+            }
+        }
+        return A;
+    }
+};
+
+
+Java:
+-----
+class Solution {
+    public int[][] flipAndInvertImage(int[][] A) {
+        int c = A[0].length;
+        for(int[] row: A){
+            for(int i = 0; i < (c+1)/2; ++i){
+                int tmp = row[i];
+                row[i] = 1 - row[c-1-i];
+                row[c-1-i] = 1 - tmp;
+            }
+        }
+        return A;
+    }
+}
+
+
+
+Python3:
+-------
+class Solution:
+    def flipAndInvertImage(self, A: List[List[int]]) -> List[List[int]]:
+        c = len(A[0])
+        for row in A:
+            for i in range((c+1)//2):
+                row[i], row[c-1-i] = 1-row[c-1-i], 1-row[i]
+            
+        return A;
+
+
