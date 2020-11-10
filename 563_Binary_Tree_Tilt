@@ -1,0 +1,94 @@
+Leetcode 563: Binary Tree Tilt
+Detailed video explanation: https://youtu.be/h-Wo5TIzfjI
+=======================================
+
+
+C++:
+----
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+    int findSum(TreeNode* root, int& tilt){
+        if(!root) return 0;
+        int l = findSum(root->left, tilt);
+        int r = findSum(root->right, tilt);
+        tilt += abs(l-r);
+        return l + r + root->val;
+    }
+public:
+    int findTilt(TreeNode* root) {
+        int tilt = 0;
+        findSum(root, tilt);
+        return tilt;
+    }
+};
+
+
+
+Java:
+-----
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    private int tilt = 0;
+    private int findSum(TreeNode root){
+        if(root == null) return 0;
+        int l = findSum(root.left);
+        int r = findSum(root.right);
+        tilt += Math.abs(l-r);
+        return l + r + root.val;
+    }
+    public int findTilt(TreeNode root) {
+        findSum(root);
+        return tilt;
+    }
+}
+
+
+
+
+Python3:
+--------
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def findTilt(self, root: TreeNode) -> int:
+        self.tilt = 0
+        def findSum(root):
+            if root == None: return 0
+            l = findSum(root.left)
+            r = findSum(root.right)
+            self.tilt += abs(l-r)
+            return l + r + root.val
+        findSum(root)
+        return self.tilt
+    
+
+
+
