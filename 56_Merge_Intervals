@@ -1,0 +1,65 @@
+Leetcode 56: Merge Intervals
+Detailed video explanation: https://youtu.be/hK_qN5UAAo4
+==============================================
+
+
+C++:
+----
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        sort(intervals.begin(), intervals.end());
+        vector<vector<int>> result;
+        int start = intervals[0][0], end = intervals[0][1];
+        for(auto& i : intervals){
+            if(i[0] > end){ // no overlap
+                result.push_back({start, end});
+                start = i[0];
+                end = i[1];
+            } else // overlap
+                end = max(end, i[1]);
+        }
+        result.push_back({start, end});
+        return result;
+    }
+};
+
+
+
+Java:
+-----
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals, (a,b)->Integer.compare(a[0], b[0]));
+        List<int[]> result = new ArrayList();
+        int start = intervals[0][0], end = intervals[0][1];
+        for(int[] i : intervals){
+            if(i[0] > end){ // no overlap
+                result.add(new int[]{start, end});
+                start = i[0];
+                end = i[1];
+            } else // overlap
+                end = Math.max(end, i[1]);
+        }
+        result.add(new int[]{start, end});
+        return result.toArray(new int[result.size()][2]);
+    }
+}
+
+
+
+Python3:
+--------
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        intervals.sort()
+        result = []
+        start, end = intervals[0][0], intervals[0][1]
+        for i in intervals:
+            if i[0] > end: # no overlap
+                result.append([start, end])
+                start, end = i[0], i[1]
+            else: # overlap
+                end = max(end, i[1])
+        result.append([start, end]);
+        return result
