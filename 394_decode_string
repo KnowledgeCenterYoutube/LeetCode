@@ -1,0 +1,58 @@
+Leetcode 394: Decode String
+Detailed video explanation: https://youtu.be/yaCRdWMq4A4
+=========================================================
+
+
+C++:
+----
+class Solution {
+    string decodeString(string& s, int& i) {
+        string result;
+        while(i < s.length() && s[i] != ']'){
+            if(isdigit(s[i])){
+                int k = 0;
+                while(i < s.length() && isdigit(s[i]))
+                    k = k*10 + s[i++] - '0';
+                i++;
+                string r = decodeString(s, i);
+                while(k-- > 0)
+                    result += r;
+                i++;
+            } else
+                result += s[i++];
+        }
+        return result;
+    }
+public:
+    string decodeString(string s) {
+        int i = 0;
+        return decodeString(s, i);
+    }
+};
+
+
+
+Java:
+-----
+class Solution {
+    int i = 0;
+    public String decodeString(String s) {
+        StringBuilder result = new StringBuilder();
+        while(i < s.length() && s.charAt(i) != ']'){
+            if(Character.isDigit(s.charAt(i))){
+                int k = 0;
+                while(i < s.length() && Character.isDigit(s.charAt(i)))
+                    k = k*10 + s.charAt(i++) - '0';
+                i++;
+                String r = decodeString(s);
+                while(k-- > 0)
+                    result.append(r);
+                i++;
+            } else
+                result.append(s.charAt(i++));
+        }
+        return result.toString();
+    }
+}
+
+
