@@ -1,0 +1,77 @@
+Leetcode 1640: Check Array Formation Through Concatenation
+Detailed video Explanation: https://youtu.be/1Q4N98UQnuc
+==========================================================
+
+
+C++:
+----
+class Solution {
+public:
+    bool canFormArray(vector<int>& arr, vector<vector<int>>& pieces) {
+        unordered_map<int, vector<int>> _map;
+        for(auto p: pieces)
+            _map.insert({p[0], p});
+        
+        int idx = 0;
+        while(idx < arr.size()){
+            if(_map.count(arr[idx])){
+                auto piece = _map[arr[idx]];
+                for(int p: piece){
+                    if(p != arr[idx]) return false;
+                    else idx++;
+                }
+            } else 
+                return false;
+        }
+        return true;
+    }
+};
+
+
+
+Java:
+-----
+class Solution {
+    public boolean canFormArray(int[] arr, int[][] pieces) {
+        Map<Integer, int[]> _map = new HashMap<>();
+        for(int[] p: pieces)
+            _map.put(p[0], p);
+        
+        int idx = 0;
+        while(idx < arr.length){
+            if(_map.containsKey(arr[idx])){
+                int[] piece = _map.get(arr[idx]);
+                for(int p: piece){
+                    if(p != arr[idx]) return false;
+                    else idx++;
+                }
+            } else 
+                return false;
+        }
+        return true;
+    }
+}
+
+
+
+
+Python3:
+--------
+class Solution:
+    def canFormArray(self, arr: List[int], pieces: List[List[int]]) -> bool:
+        _map = {}
+        for p in pieces:
+            _map[p[0]] = p
+        
+        idx = 0
+        while idx < len(arr):
+            if arr[idx] in _map:
+                piece = _map[arr[idx]]
+                for p in piece:
+                    if p != arr[idx]: return False
+                    else: idx += 1
+            else:
+                return False
+        return True
+
+
