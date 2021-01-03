@@ -1,0 +1,79 @@
+Leetcode 1379 : Find a Corresponding Node of a Binary Tree in a Clone of That Tree
+Detailed video Explanation: https://youtu.be/_9Vo3S-PbIU
+===================================================================================
+
+
+
+C++:
+----
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+class Solution {
+public:
+    TreeNode* getTargetCopy(TreeNode* original, TreeNode* cloned, TreeNode* target) {
+        if(original){
+            if(original == target) return cloned;
+            TreeNode *t = getTargetCopy(original->left, cloned->left, target);
+            if(t) return t;
+            return getTargetCopy(original->right, cloned->right, target);
+        }
+        return nullptr;
+    }
+};
+
+
+
+Java:
+-----
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+
+class Solution {
+    public final TreeNode getTargetCopy(final TreeNode original, final TreeNode cloned, final TreeNode target) {
+        if(original != null){
+            if(original == target) return cloned;
+            TreeNode t = getTargetCopy(original.left, cloned.left, target);
+            if(t != null) return t;
+            return getTargetCopy(original.right, cloned.right, target);
+        }
+        return null;
+    }
+}
+
+
+
+Python3:
+-------
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def getTargetCopy(self, original: TreeNode, cloned: TreeNode, target: TreeNode) -> TreeNode:
+        if original != None:
+            if original == target: return cloned
+            t = self.getTargetCopy(original.left, cloned.left, target)
+            if t != None: return t
+            return self.getTargetCopy(original.right, cloned.right, target)
+        
+        return None
+
+
