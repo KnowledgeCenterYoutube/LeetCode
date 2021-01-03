@@ -1,0 +1,73 @@
+Leetcode 526: Beautiful Arrangement
+Detailed video Explanation: https://youtu.be/vhHrUeSdFGU
+=========================================================
+
+
+C++:
+----
+class Solution {
+    void calculate(int n, int pos, vector<bool>& visited, int& count){
+        if(pos > n) count++;
+        for(int i = 1; i <= n; ++i){
+            if(!visited[i] && (pos % i == 0 || i%pos == 0)){
+                visited[i] = true;
+                calculate(n, pos+1, visited, count);
+                visited[i] = false;
+            }
+        }
+    }
+public:
+    int countArrangement(int n) {
+        vector<bool> visited(n+1, false);
+        int count = 0;
+        calculate(n, 1, visited, count);
+        return count;
+    }
+};
+
+
+
+Java:
+-----
+class Solution {
+    private int count = 0;
+    private void calculate(int n, int pos, boolean[] visited){
+        if(pos > n) count++;
+        for(int i = 1; i <= n; ++i){
+            if(!visited[i] && (pos % i == 0 || i%pos == 0)){
+                visited[i] = true;
+                calculate(n, pos+1, visited);
+                visited[i] = false;
+            }
+        }
+    }
+    
+    public int countArrangement(int n) {
+        boolean[] visited = new boolean[n+1];
+        calculate(n, 1, visited);
+        return count;
+    }
+}
+
+
+
+
+Python3:
+--------
+class Solution:
+    def countArrangement(self, n: int) -> int:
+        self.visited = [False]*(n+1)
+        self.count = 0
+        
+        def calculate(n, pos):
+            if pos > n: self.count += 1
+            for i in range(1, n+1):
+                if not self.visited[i] and (pos % i == 0 or i%pos == 0):
+                    self.visited[i] = True
+                    calculate(n, pos+1)
+                    self.visited[i] = False
+        
+        calculate(n, 1)
+        return self.count
+
+
