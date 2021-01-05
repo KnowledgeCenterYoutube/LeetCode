@@ -1,0 +1,86 @@
+Leetcode 82: Remove Duplicates from Sorted List II
+Detailed video Explanation: https://youtu.be/iv2RAR61-wM
+======================================================
+
+
+
+C++:
+----
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        if(!head || !head->next) return head;
+        ListNode *next = head->next;
+        
+        if(next->val == head->val){
+            while(next && next->val == head->val) next = next->next;
+            return deleteDuplicates(next);
+        } else {
+            head->next = deleteDuplicates(next);
+            return head;
+        }
+    }
+};
+
+
+
+Java:
+-----
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head == null || head.next == null) return head;
+        ListNode next = head.next;
+        
+        if(next.val == head.val){
+            while(next != null && next.val == head.val) next = next.next;
+            return deleteDuplicates(next);
+        } else {
+            head.next = deleteDuplicates(next);
+            return head;
+        }
+    }
+}
+
+
+
+
+Python3:
+--------
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def deleteDuplicates(self, head: ListNode) -> ListNode:
+        if head == None or head.next == None: return head
+        next = head.next
+        
+        if next.val == head.val:
+            while next != None and next.val == head.val: next = next.next
+            return self.deleteDuplicates(next)
+        else:
+            head.next = self.deleteDuplicates(next)
+            return head
+        
+
