@@ -1,0 +1,65 @@
+Leetcode 1539: Kth Missing Positive Number
+Detailed video explanation: 
+====================================================
+
+
+C++:
+----
+class Solution {
+public:
+    int findKthPositive(vector<int>& arr, int k) {
+        int next_int = 1;
+        for(int a: arr){
+            if(a == next_int)
+                next_int++;
+            else{
+                int gap = a - next_int;
+                if(gap >= k) return next_int + k -1;
+                k -= gap;
+                next_int = a+1;
+            }
+        }
+        return next_int + k -1;
+    }
+};
+
+
+
+Java:
+-----
+class Solution {
+    public int findKthPositive(int[] arr, int k) {
+        int next_int = 1;
+        for(int a: arr){
+            if(a == next_int)
+                next_int++;
+            else{
+                int gap = a - next_int;
+                if(gap >= k) return next_int + k -1;
+                k -= gap;
+                next_int = a+1;
+            }
+        }
+        return next_int + k -1;
+    }
+}
+
+
+
+
+Python3:
+--------
+class Solution:
+    def findKthPositive(self, arr: List[int], k: int) -> int:
+        next_int = 1
+        for a in arr:
+            if a == next_int:
+                next_int += 1
+            else:
+                gap = a - next_int
+                if gap >= k: return next_int + k -1
+                k -= gap
+                next_int = a+1
+        return next_int + k -1
+
+
