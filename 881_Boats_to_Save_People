@@ -1,0 +1,64 @@
+Leetcode 881: Boats to Save People
+Detailed video explanation: https://youtu.be/MTStYiAJrKk
+====================================================
+
+C++:
+----
+class Solution {
+public:
+    int numRescueBoats(vector<int>& people, int limit) {
+        sort(people.begin(), people.end());
+        int i = 0, j = people.size() - 1;
+        int boats = 0;
+        
+        while(i <= j){
+            if(people[i] + people[j] <= limit)
+                i++;
+            j--;
+            boats++;
+        }
+        return boats;
+    }
+};
+
+
+
+
+Java:
+-----
+class Solution {
+    public int numRescueBoats(int[] people, int limit) {
+        Arrays.sort(people);
+        int i = 0, j = people.length - 1;
+        int boats = 0;
+        
+        while(i <= j){
+            if(people[i] + people[j] <= limit)
+                i++;
+            j--;
+            boats++;
+        }
+        return boats;
+    }
+}
+
+
+
+
+Python3:
+--------
+class Solution:
+    def numRescueBoats(self, people: List[int], limit: int) -> int:
+        people.sort()
+        i, j = 0, len(people) - 1
+        boats = 0
+        
+        while i <= j:
+            if (people[i] + people[j]) <= limit:
+                i = i+1
+            j -= 1
+            boats += 1
+        
+        return boats
+
+
