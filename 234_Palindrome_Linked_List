@@ -1,0 +1,98 @@
+Leetcode 234: Palindrome Linked List
+Detailed video explanation: https://youtu.be/H3J-HoGCVXs
+========================================================
+
+
+C++:
+----
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        if(!head || !head->next) return true;
+        ListNode *s = head, *f = head, *c = head, *p = nullptr;
+        while(f && f->next){
+            c = s;
+            s = s->next;
+            f = f->next->next;
+            c->next = p;
+            p = c;
+        }
+        if(f) s = s->next;
+        while(p && p->val == s->val){
+            p = p->next;
+            s = s->next;
+        }
+        return !p;
+    }
+};
+
+
+
+Java:
+-----
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        if(head == null || head.next == null) return true;
+        ListNode s = head, f = head, c = head, p = null;
+        while(f != null && f.next != null){
+            c = s;
+            s = s.next;
+            f = f.next.next;
+            c.next = p;
+            p = c;
+        }
+        if(f != null) s = s.next;
+        while(p != null && p.val == s.val){
+            p = p.next;
+            s = s.next;
+        }
+        return (p == null);
+    }
+}
+
+
+
+
+Python3:
+--------
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def isPalindrome(self, head: ListNode) -> bool:
+        if (head == None) or (head.next == None): return True
+        s, f, c, p = head, head, head, None
+        while (f != None) and (f.next != None):
+            c, s, f = s, s.next, f.next.next
+            c.next = p
+            p = c
+        
+        if f != None: s = s.next
+        while(p != None) and (p.val == s.val):
+            p = p.next
+            s = s.next
+        
+        return (p == None)
+
