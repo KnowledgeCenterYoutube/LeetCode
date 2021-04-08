@@ -4,23 +4,31 @@ Detailed video explanation can be found here: https://youtu.be/FSWqYp3k1O4
 C++
 ---
 vector<vector<int>> levelOrderBottom(TreeNode* root) {
+        if(root== nullptr)
+            return {};
         vector<vector<int>> result;
-        if(!root) return result;
-        queue<TreeNode*> Q;
-        Q.push(root);
-        while(!Q.empty()){
-            int n = Q.size();
-            vector<int> nodes(n);
-            for(int i = 0; i < n; ++i){
-                TreeNode* node = Q.front();
-                nodes[i] = node->val;
-                Q.pop();
-                if(node->left) Q.push(node->left);
-                if(node->right) Q.push(node->right);
+        vector<int> v1;
+        int size;
+        queue<TreeNode*> q1;
+        q1.push(root);
+        while(!q1.empty())
+        {
+            size=q1.size();
+            TreeNode* current;
+            for(int i=0;i<=size-1;i++)
+            {
+                current=q1.front();
+                v1.push_back(current->val);
+                q1.pop();
+                if(current->left!=nullptr)
+                    q1.push(current->left);
+                if(current->right!=nullptr)
+                    q1.push(current->right);
             }
-            result.push_back(nodes);
+            result.push_back(v1);
+            v1.clear();
         }
-        reverse(result.begin(), result.end());
+        reverse(result.begin(),result.end());
         return result;
     }
     
