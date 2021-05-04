@@ -1,0 +1,65 @@
+Leetcode 665: Non-decreasing Array
+Detailed video explanation: https://youtu.be/KNeYi11859M
+=========================================================
+
+
+C++:
+----
+class Solution {
+public:
+    bool checkPossibility(vector<int>& nums) {
+        int n = nums.size();
+        if(n == 1) return true;
+        int idx = 0;
+        for(int i = 1; i < n; ++i){
+            if(nums[i] < nums[i-1]){
+                if(idx != 0) return false;
+                idx = i;
+            }
+        }
+        if(idx == 0 || idx == 1 || idx == n-1) return true;
+        if((nums[idx-1] > nums[idx+1]) && (nums[idx-2] > nums[idx])) return false;
+        return true;
+    }
+};
+
+
+
+
+Java:
+-----
+class Solution {
+    public boolean checkPossibility(int[] nums) {
+        int n = nums.length;
+        if(n == 1) return true;
+        int idx = 0;
+        for(int i = 1; i < n; ++i){
+            if(nums[i] < nums[i-1]){
+                if(idx != 0) return false;
+                idx = i;
+            }
+        }
+        if(idx == 0 || idx == 1 || idx == n-1) return true;
+        if((nums[idx-1] > nums[idx+1]) && (nums[idx-2] > nums[idx])) return false;
+        return true;
+    }
+}
+
+
+
+
+Python3:
+-------
+class Solution:
+    def checkPossibility(self, nums: List[int]) -> bool:
+        n, idx = len(nums), 0
+        if n == 1: return True
+        for i in range(1, n):
+            if nums[i] < nums[i-1]:
+                if idx != 0: return False
+                idx = i
+        if (idx == 0 or idx == 1 or idx == n-1): return True
+        if ((nums[idx-1] > nums[idx+1]) and (nums[idx-2] > nums[idx])): return False
+        return True
+
+
