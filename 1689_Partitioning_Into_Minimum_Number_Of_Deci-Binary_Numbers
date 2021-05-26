@@ -1,0 +1,48 @@
+Leetcode 1689 : Partitioning Into Minimum Number Of Deci-Binary Numbers
+Detailed video explanation : https://youtu.be/uBZY0VIRwlg
+======================================================================
+
+
+C++:
+----
+class Solution {
+public:
+    int minPartitions(string n) {
+        
+        int max_ = 0;
+        for(auto c: n){
+            max_ = max(max_, c-'0');
+        }
+        return max_;
+        
+        //return *max_element(n.begin(), n.end()) - '0';
+    }
+};
+
+
+
+Java:
+-----
+class Solution {
+    public int minPartitions(String n) {
+        int max_ = 0;
+        for(int i = 0; i < n.length(); ++i){
+            max_ = Math.max(max_, n.charAt(i)-'0');
+        }
+        return max_;
+    }
+}
+
+
+
+
+Python3:
+--------
+class Solution:
+    def minPartitions(self, n: str) -> int:
+        max_ = 0
+        for c in n:
+            max_ = max(max_, ord(c)-ord('0'))
+        
+        return max_
+
