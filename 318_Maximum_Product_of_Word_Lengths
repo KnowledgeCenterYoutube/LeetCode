@@ -1,0 +1,89 @@
+Leetcode 318 : Maximum Product of Word Lengths
+Detailed video explanation : https://youtu.be/E8Ctj36CzuY
+================================================
+
+
+C++:
+----
+class Solution {
+public:
+    int maxProduct(vector<string>& words) {
+        int n = words.size();
+        vector<int> word_int(n, 0);
+        vector<int> word_len(n, 0);
+        for(int i = 0; i < n; ++i){
+            string w = words[i];
+            int _len = w.length();
+            int w_int = 0;
+            for(int j = 0; j < _len; ++j)
+                w_int |= 1 << (w[j] - 'a');
+            word_int[i] = w_int;
+            word_len[i] = _len;
+        }
+        
+        int max_product = 0;
+        for(int i = 0; i < n-1; ++i){
+            for(int j = i+1; j < n; ++j){
+                if((word_int[i] & word_int[j]) == 0)
+                    max_product = max(max_product, word_len[i]*word_len[j]);
+            }
+        }
+        return max_product;
+    }
+};
+
+
+
+
+Java:
+-----
+class Solution {
+    public int maxProduct(String[] words) {
+        int n = words.length;
+        int[] word_int = new int[n];
+        int[] word_len = new int[n];
+        for(int i = 0; i < n; ++i){
+            String w = words[i];
+            int _len = w.length();
+            int w_int = 0;
+            for(int j = 0; j < _len; ++j)
+                w_int |= 1 << (w.charAt(j) - 'a');
+            word_int[i] = w_int;
+            word_len[i] = _len;
+        }
+        
+        int max_product = 0;
+        for(int i = 0; i < n-1; ++i){
+            for(int j = i+1; j < n; ++j){
+                if((word_int[i] & word_int[j]) == 0)
+                    max_product = Math.max(max_product, word_len[i]*word_len[j]);
+            }
+        }
+        return max_product;
+    }
+}
+
+
+
+Python3:
+-------
+class Solution:
+    def maxProduct(self, words: List[str]) -> int:
+        n = len(words)
+        word_int, word_len = [0]*n, [0]*n
+        for i in range(n):
+            w = words[i]
+            _len = len(w)
+            w_int = 0
+            for j in range(_len):
+                w_int |= 1 << (ord(w[j]) - ord('a'))
+            word_int[i] = w_int
+            word_len[i] = _len
+        
+        max_product = 0
+        for i in range(n-1):
+            for j in range(i+1, n):
+                if((word_int[i] & word_int[j]) == 0):
+                    max_product = max(max_product, word_len[i]*word_len[j])
+        return max_product
+
