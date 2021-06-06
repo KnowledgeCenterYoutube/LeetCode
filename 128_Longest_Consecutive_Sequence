@@ -1,0 +1,70 @@
+Leetcode 128 : Longest Consecutive Sequence
+Detailed video explanation : https://youtu.be/goJGPugNLcs
+========================================================
+
+
+C++:
+----
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        unordered_set<int> nums_set(nums.begin(), nums.end());
+        int res = 0;
+        for(int n : nums){
+            if(nums_set.find(n) != nums_set.end()){
+                nums_set.erase(n);
+                int prev = n-1;
+                int next = n+1;
+                while(nums_set.find(prev) != nums_set.end()) nums_set.erase(prev--);
+                while(nums_set.find(next) != nums_set.end()) nums_set.erase(next++);
+                res = max(res, next-prev-1);
+            }
+        }
+        return res;
+    }
+};
+
+
+
+Java:
+-----
+class Solution {
+    public int longestConsecutive(int[] nums) {
+        Set<Integer> nums_set = new HashSet<Integer>();
+        for(int n : nums) nums_set.add(n);
+        int res = 0;
+        for(int n : nums){
+            if(nums_set.contains(n) ){
+                nums_set.remove(n);
+                int prev = n-1;
+                int next = n+1;
+                while(nums_set.contains(prev)) nums_set.remove(prev--);
+                while(nums_set.contains(next)) nums_set.remove(next++);
+                res = Math.max(res, next-prev-1);
+            }
+        }
+        return res;
+    }
+}
+
+
+
+Python3:
+-------
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
+        nums_set = set(nums)
+        res = 0
+        for n in nums:
+            if n in nums_set:
+                nums_set.remove(n)
+                prev, next = n-1, n+1
+                while prev in nums_set:
+                    nums_set.remove(prev)
+                    prev -= 1
+                while next in nums_set: 
+                    nums_set.remove(next)
+                    next += 1
+                res = max(res, next-prev-1)
+        return res
+
