@@ -5,30 +5,50 @@ Detailed video explanation: https://youtu.be/mvQj-L0wEx0
 C++:
 ----
 vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
-        if(!root) return {};
+        if(root==nullptr)
+            return {};
+        int x=0,size,size1,y;
         vector<vector<int>> result;
-        deque<TreeNode*> Q;
-        Q.push_front(root);
-        bool reverse = true;
-        while(!Q.empty()){
-            int count = Q.size();
-            vector<int> level_nodes;
-            deque<TreeNode*> dQ;
-            for(int i = 0; i < count; ++i){
-                TreeNode* n = Q.front();
-                level_nodes.push_back(n->val);
-                Q.pop_front();
-                if(reverse){
-                    if(n->left) dQ.push_front(n->left);
-                    if(n->right) dQ.push_front(n->right);
-                } else {
-                    if(n->right) dQ.push_front(n->right);
-                    if(n->left) dQ.push_front(n->left);
-                } 
+        vector<int> v1;
+        stack<int> s1;
+        queue<TreeNode*> q1;
+        q1.push(root);
+        TreeNode* current;
+        while(!q1.empty())
+        {
+            size=q1.size();
+            for(int i=0;i<=size-1;i++)
+            {
+                if(x%2!=0)
+                {
+                    current=q1.front();
+                    s1.push(current->val);
+                    q1.pop();
+                }
+                else
+                {
+                    current=q1.front();
+                    v1.push_back(current->val);
+                    q1.pop();
+                }
+                if(current->left!=nullptr)
+                    q1.push(current->left);
+                if(current->right!=nullptr)
+                    q1.push(current->right);
             }
-            Q.insert(Q.end(), dQ.begin(), dQ.end());
-            result.push_back(level_nodes);
-            reverse = !reverse;
+            if(!s1.empty())
+            {
+                size1=s1.size();
+                for(int i=0;i<=size1-1;i++)
+                {
+                    y=s1.top();
+                    s1.pop();
+                    v1.push_back(y);
+                }
+            }
+            result.push_back(v1);
+            v1.clear();
+            x++;
         }
         return result;
     }
