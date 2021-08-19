@@ -1,0 +1,23 @@
+Leetcode 1929: Concatenation of Array
+Detailed video explanation: https://youtu.be/Hb6ijYEpz6c
+=======================================
+
+
+C++:
+----
+class Solution {
+public:
+    vector<int> getConcatenation(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> result(2*n, 0);
+        //for(int i = 0; i < 2*n; ++i)
+        //    result[i] = nums[i%n];
+        
+        for(int i = 0; i < n; ++i){
+            result[i] = nums[i];
+            result[i+n] = nums[i];
+        }
+        return result;
+    }
+};
+
