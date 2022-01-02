@@ -1,0 +1,22 @@
+Leetcode 1010 : Pairs of Songs With Total Durations Divisible by 60
+Detailed video explanation : https://youtu.be/LBGZbmYgEFE
+=================================================================
+
+C++:
+----
+class Solution {
+public:
+    int numPairsDivisibleBy60(vector<int>& time) {
+        vector<int> counts(60);
+        for(auto i: time)
+            counts[i%60] += 1;
+        int result = 0;
+        for(int i = 1; i < 30; ++i)
+            result += counts[i]*counts[60-i];
+        result += (counts[0]*(counts[0]-1))/2 + 
+            (counts[30]*(counts[30]-1))/2;
+        
+        return result;
+    }
+};
+
