@@ -19,13 +19,12 @@ C++
 class Solution {
 public:
     TreeNode* insertIntoBST(TreeNode* root, int val) {
-        TreeNode* t = new TreeNode(val);
         if(!root)
-            return t;
+            return new TreeNode(val);
         if(root->val < val)
-            root->right = root->right ? insertIntoBST(root->right, val) : t;
+            root->right = root->right ? insertIntoBST(root->right, val) : new TreeNode(val);
         else
-            root->left = root->left ? insertIntoBST(root->left, val) : t;
+            root->left = root->left ? insertIntoBST(root->left, val) : new TreeNode(val);
         return root;
     }
 };
