@@ -25,7 +25,6 @@ public:
         ListNode *head = PQ.top();
         PQ.pop();
         if(head->next) PQ.push(head->next);
-        head->next = nullptr;
         ListNode *curr = head;
         while(!PQ.empty()){
             ListNode *n = PQ.top();
