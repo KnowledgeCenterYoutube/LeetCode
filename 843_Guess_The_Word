@@ -1,0 +1,39 @@
+Leetcode 843 : Guess the Word
+Detailed video explanation : https://youtu.be/COnrhAabeos
+===============================================
+
+C++:
+----
+/**
+ * // This is the Master's API interface.
+ * // You should not implement it, or speculate about its implementation
+ * class Master {
+ *   public:
+ *     int guess(string word);
+ * };
+ */
+class Solution {
+    int findMatches(string w1, string w2){
+        int count = 0;
+        for(int i =0; i < 6; ++i)
+            if(w1[i] == w2[i]) count++;
+        return count;
+    }
+public:
+    void findSecretWord(vector<string>& words, Master& master) {
+        srand(time(0));
+        vector<string> candidates;
+        for(int i =0; i < words.size(); ++i)
+            candidates.push_back(words[i]);
+        
+        while(!candidates.empty()){
+            string word = candidates[rand()%candidates.size()];
+            int match = master.guess(word);
+            if(match == 6) return;
+            vector<string> temp;
+            for(string w: candidates)
+                if(findMatches(w, word) == match) temp.push_back(w);
+            candidates = temp;
+        }
+    }
+};
