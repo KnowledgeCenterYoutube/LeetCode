@@ -1,0 +1,83 @@
+Leetcode 208 : Implement Trie (Prefix Tree)
+
+=====================================================
+
+C++:
+----
+
+// Hashmap based
+class Trie {
+    unordered_map<char, Trie*> children;
+    bool isEndOfWord;
+public:
+    Trie():isEndOfWord(false) {}
+    
+    void insert(string word) {
+        Trie* curr = this;
+        for(char c: word){
+            if(!curr->children.count(c))
+                curr->children[c] = new Trie();
+            curr = curr->children[c];
+        }
+        curr->isEndOfWord = true;
+    }
+    
+    bool search(string word) {
+        Trie* curr = this;
+        for(char c: word){
+            if(!curr->children.count(c))
+                return false;
+            curr = curr->children[c];
+        }
+        return curr->isEndOfWord;
+    }
+    
+    bool startsWith(string prefix) {
+        Trie* curr = this;
+        for(char c: prefix){
+            if(!curr->children.count(c))
+                return false;
+            curr = curr->children[c];
+        }
+        return true;
+    }
+};
+
+/* Vector based
+ class Trie {
+    vector<Trie*> children;
+    bool isEndOfWord;
+public:
+    Trie():isEndOfWord(false), children(26, nullptr) {}
+    
+    void insert(string word) {
+        Trie* curr = this;
+        for(char c: word){
+            if(!curr->children[c-'a'])
+                curr->children[c-'a'] = new Trie();
+            curr = curr->children[c-'a'];
+        }
+        curr->isEndOfWord = true;
+    }
+    
+    bool search(string word) {
+        Trie* curr = this;
+        for(char c: word){
+            if(!curr->children[c-'a'])
+                return false;
+            curr = curr->children[c-'a'];
+        }
+        return curr->isEndOfWord;
+    }
+    
+    bool startsWith(string prefix) {
+        Trie* curr = this;
+        for(char c: prefix){
+            if(!curr->children[c-'a'])
+                return false;
+            curr = curr->children[c-'a'];
+        }
+        return true;
+    }
+};
+*/
