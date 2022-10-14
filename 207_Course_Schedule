@@ -1,0 +1,30 @@
+Leetcode 207 : Course Schedule
+
+==========================================================
+
+C++:
+----
+class Solution {
+    bool dfs(int s, vector<vector<int>>& adj, vector<int>& visited){
+        visited[s] = 1;
+        for(auto u: adj[s]){
+            if(visited[u] == 1) return true;
+            else if(visited[u] == 0){
+                if(dfs(u, adj, visited)) return true;
+            }
+        }
+        visited[s] = 2;
+        return false;
+    }
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> adj(numCourses, vector<int>());
+        for(auto edge: prerequisites)
+            adj[edge[1]].push_back(edge[0]);
+        vector<int> visited(numCourses, 0);
+        for(int i = 0; i < numCourses; ++i){
+            if(!visited[i] && dfs(i, adj, visited)) return false;
+        }
+        return true;
+    }
+};
